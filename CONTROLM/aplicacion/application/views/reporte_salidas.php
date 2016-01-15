@@ -34,32 +34,6 @@ if($this->session->userdata('conectado') == true){ ?>
 	</tr>
     
     <tr id="movimiento"></tr>
-    
-    
-    <!--<tr>
-      <td>Producto: </td>
-      <td><input type="text" name="BuscaProducto" id="BuscaProducto" disabled="disabled" class="form-control input-sm" autocomplete="off" size="30" /></td>
-      <td>Cantidad:</td>
-      <td><input  type="text" name="cantidad" id="cantidad" onkeypress="return validarNumeros(event)" autocomplete="off"  class="form-control input-sm" size="3" value="1" /></td>
-      <td>
-        <input type="hidden" name="descripcion"  id="descripcion" />
-        <input type="hidden" name="costo"  id="costo" />
-        <input type="hidden" name="idProveedor"  id="idProveedor" />
-        <input type="hidden" name="codigo"  id="codigo" />
-        <input type="hidden" name="Proveedor"  id="Proveedor" />
-        <input type="hidden" name="Cliente"  id="Cliente" />
-        <input type="hidden" name="idsessionventa"  id="idsessionventa" value="<?php echo md5(rand(1000,50000)); ?>" /></td>
-      <td>Existencia:</td>
-      <td>
-        <input type="text" name="existencia" id="existencia" class="form-control input-sm"  size="3" readonly="readonly"/>
-      </td>
-      <td>Precio:</td>
-      <td><input type="text" name="precioventa" class="form-control input-sm"  id="precioventa" size="3" readonly="readonly"/></td>
-     <td>
-      &nbsp;<button type="submit" disabled="disabled" id="AgregaProducto" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Agregar Producto</button>
-      
-    </td>
-    </tr>-->
   </table>
 </form>
 <br/><hr/><br/>
