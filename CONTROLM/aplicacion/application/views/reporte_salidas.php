@@ -4,31 +4,39 @@ if($this->session->userdata('conectado') == true){ ?>
 
 <script src="<?php echo base_url()?>asset/js/jquery-1.10.2.js"></script>
 <script src="<?php echo base_url()?>asset/js/jquery-ui.js"></script>
-<script src="<?php echo base_url();?>asset/js/JsonVenta.js"></script>
+<!--<script src="<?php echo base_url();?>asset/js/JsonVenta.js"></script>-->
+<script src="<?php echo base_url();?>asset/js/JsonMovimientos.js"></script>
 
 </script>
-<h1 class="page-header"><span class="glyphicon glyphicon-list"></span> Nueva Salida</h1>
+<h1 class="page-header"><span class="glyphicon glyphicon-list"></span> Nuevo Movimiento</h1>
 <div id="mensaje"></div>
 <hr/><br/>
-<table border=0 width="100%">
-	<tr>
-		<td colspan="10">
-			<table>
-				<tr>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;Tecnico:&nbsp;&nbsp;&nbsp;</td>
-					<td><input type="text" name="BuscaCliente" id="BuscaCliente" class="form-control input-sm" autocomplete="off" size="30" /></td>
-					<td>&nbsp;<button type="reset" class="btn btn-default" onclick="RefrescarPagina();"><span class="glyphicon glyphicon-refresh"></span> Cambiar Tecnico</button></td>
-					<td>&nbsp;<label id="lblNombrecliente" name="lblNombrecliente"> </label>
-            <label id="lblidcliente" name="lblidcliente"> </label>
-          </td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<tr>
+<form name="formulario" id="formulario" role="form">
+  <table border=0 width="100%">
+    <tr>
+      <td colspan="10">
+        <table>
+          <tr>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
+            <td>
+              <select name="tipoMovimiento" id="tipoMovimiento" class="form-control input-sm" >
+                <option></option>
+                <option>Entrada</option>
+                <option>Salida</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
 		<td colspan="10"><br/></td>
 	</tr>
-    <tr>
+    
+    <tr id="movimiento"></tr>
+    
+    
+    <!--<tr>
       <td>Producto: </td>
       <td><input type="text" name="BuscaProducto" id="BuscaProducto" disabled="disabled" class="form-control input-sm" autocomplete="off" size="30" /></td>
       <td>Cantidad:</td>
@@ -51,10 +59,11 @@ if($this->session->userdata('conectado') == true){ ?>
       &nbsp;<button type="submit" disabled="disabled" id="AgregaProducto" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Agregar Producto</button>
       
     </td>
-    </tr>
-    </table>
+    </tr>-->
+  </table>
+</form>
 <br/><hr/><br/>
-<form   name="formulario" id="formulario" role="form">
+<!--<form   name="formulario" id="formulario" role="form">
 <table class="table table-bordered table-striped"    id="carrito">
   <thead>
     <th>Código</th>
@@ -87,17 +96,17 @@ if($this->session->userdata('conectado') == true){ ?>
   </tr>
 </tfoot> 
   </table>
-  <!--<p class="bg-success">Direcciónes de Embarque</p>
+  <p class="bg-success">Direcciónes de Embarque</p>
   <input type="radio" value="0"/> Dir. de Embarque <input type="radio" value="1"> Dir de Recolección. 
 <br/>
   Dir. de Entrega: 
   <select name="dirEnvio">
-    <option value="0">--Elige Dirección</option>
-  </select>-->
+    <option value="0">Elige Dirección</option>
+  </select>
  <center>
   <button type="reset" class="btn btn-default" onclick="javascript:location.reload();"><span class="glyphicon glyphicon-edit"></span> Nueva Salida</button> &nbsp;
   <button type="submit" id="SaveOrder" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Crear Salida</button></center>
-</form>		
+</form>		-->
 
 
 
