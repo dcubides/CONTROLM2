@@ -59,8 +59,8 @@
       <ul class="mainnav">
         <li class="active"><a href="<?php echo site_url('salidas_bodega')?>"><i class="icon-dashboard"></i><span>Reportes de Salidas </span> </a> </li>
          <li class="active"><a href=""><i class="icon-dashboard"></i><span>Reportes de Devoluciones</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('productos/administra')?>'><i class="icon-list-alt"></i><span>Informes Tecnico</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('productos/resultados')?>'><i class="icon-facetime-video"></i><span>Informes Tickets</span> </a></li>
+        <li class="active"><a href='<?php echo site_url('productos/administra')?>'><i class="icon-list-alt"></i><span>Informes</span> </a> </li>
+        <li class="active"><a href='<?php echo site_url('productos/resultados')?>'><i class="icon-facetime-video"></i><span>Informes</span> </a></li>
         <li class="active"><a href="<?php echo base_url();?>index.php/home/salir"><i class="icon-bar-chart"></i><span>Salir</span> </a> </li>
         <li><a href="#"><i class="icon-code"></i><span>desarrollo</span> </a> </li>
        
