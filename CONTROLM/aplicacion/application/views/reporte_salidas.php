@@ -8,35 +8,114 @@ if($this->session->userdata('conectado') == true){ ?>
 <script src="<?php echo base_url();?>asset/js/JsonMovimientos.js"></script>
 
 </script>
-<h1 class="page-header"><span class="glyphicon glyphicon-list"></span> Nuevo Movimiento</h1>
-<div id="mensaje"></div>
-<hr/><br/>
-<form name="formulario" id="formulario" role="form">
-  <table border=0 width="100%">
-    <tr>
-      <td colspan="10">
-        <table>
-          <tr>
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
-            <td>
-              <select name="tipoMovimiento" id="tipoMovimiento" class="form-control input-sm" >
-                <option></option>
-                <option>Entrada</option>
-                <option>Salida</option>
-              </select>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-    <tr>
-		<td colspan="10"><br/></td>
-	</tr>
-    
-    <tr id="movimiento"></tr>
-  </table>
-</form>
+
+
+
+  
+  
+          
+          <div class="span12">          
+            
+            <div class="widget ">
+              
+              <div class="widget-header">
+                <i class="icon-user"></i>
+                <h3>Nuevo Movimiento</h3>
+            </div> <!-- /widget-header -->
+          
+          <div class="widget-content">
+            
+                <form name="formulario" id="formulario" class="form-horizontal" role="form">
+
+            <h1><span class="glyphicon glyphicon-list"></span> Nuevo Movimiento</h1>
+            <div id="mensaje"></div>
+            <hr/><br/>
+
+              <table class="table table-striped table-bordered" border=0 width="100%">
+                <tr>
+                  <td colspan="10">
+                    <table>
+                      <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                          <select name="tipoMovimiento" id="tipoMovimiento" class="span2" >
+                            <option></option>
+                            <option>Entrada</option>
+                            <option>Salida</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+            		<td colspan="10"><br/></td>
+            	</tr>
+                
+                <tr id="movimiento"></tr>
+              </table>
+            
+            </form>
+
 <br/><hr/><br/>
+
+
+
+
+</div>
+
+
+</div>
+            
+            
+            
+            
+            
+          </div> <!-- /widget-content -->
+            
+        </div> <!-- /widget -->
+            
+        </div> <!-- /span8 -->
+          
+          
+          
+          
+       <!-- <table class="table table-striped table-bordered" border=0 width="100%">
+                <tr>
+                  <td colspan="10">
+                    <table>
+                      <tr>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                          <select name="tipoMovimiento" id="tipoMovimiento" class="form-control input-sm" >
+                            <option></option>
+                            <option>Entrada</option>
+                            <option>Salida</option>
+                          </select>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                <td colspan="10"><br/></td>
+              </tr>
+                
+                <tr id="movimiento"></tr>
+              </table>
+            
+            </form>-->
+
+    
+
+
+
+
+
+
+
+
+
 <!--<form   name="formulario" id="formulario" role="form">
 <table class="table table-bordered table-striped"    id="carrito">
   <thead>

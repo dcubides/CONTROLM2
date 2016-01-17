@@ -37,6 +37,7 @@ class Home extends CI_Controller {
 																'email' => $this->input->post('email'),
 																'password' => md5($this->input->post('password')),
 																'conectado' => true,
+																
 			);
 
 			$this->session->set_userdata($sesion_usuario);

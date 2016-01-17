@@ -9,17 +9,18 @@ $(document).ready(function(){
      if(tipoM=='Salida'){
         Tmovimiento = '<table border=0 width="100%">' +
                     '<tr>' +
-                      '<td>Técnico</td>' +
+                      '<td>Entrega</td>' +
                       '<td>:</td>' +
-                      '<td><input /></td>' +  
-                      '<td>Recibe</td>' +
-                      '<td>:</td>' +
-                      '<td><input /></td>' +
+                      '<td><input type="text" class="span2" /></td>' +  
+                      '<td>Tecnico:</td>' +
+                      
+                      //'<td>:</td>' +
+                      '<td><input type="text" class="span2" /></td>' +
                       '<td>Requisición</td>' +
                       '<td>:</td>' +
-                      '<td><input /></td>' +
-                      '<td><button type="button" class="btn btn-default" id="clear-salida"><span class="glyphicon glyphicon-edit"></span> Nueva Salida</button> &nbsp; </td>' +
-                      '<td><button type="submit" id="SaveOrder" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Crear Salida</button></center> </td>' +
+                      '<td><input type="text" class="span2" /></td>' +
+                      '<td><button type="button" class="btn" id="clear-salida"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp; </td>' +
+                      '<td><button type="submit" id="SaveOrder" class="btn btn-primary"><span class="icon-save"></span> Crear Salida</button></center> </td>' +
                     '</tr>' +
                   '</table>'
      }
@@ -32,8 +33,8 @@ $(document).ready(function(){
                       '<td>Recibe</td>' +
                       '<td>:</td>' +
                       '<td><input /></td>' +
-                      '<td><button type="button" class="btn btn-default" id="clear-entrada"><span class="glyphicon glyphicon-edit"></span> Nueva Entrada</button> &nbsp; </td>' +
-                      '<td><button type="submit" id="SaveOrder" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-saved"></span> Crear Entrada</button></center> </td>' +
+                      '<td><button type="button" class="btn" id="clear-entrada"><span class="icon-repeat"></span> Nueva Entrada</button> &nbsp; </td>' +
+                      '<td><button type="submit" id="SaveOrder" class="btn btn-primary"><span class="icon-save"></span> Crear Entrada</button></center> </td>' +
                     '</tr>' +
                   '</table>'
      }

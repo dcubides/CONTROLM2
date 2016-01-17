@@ -1,3 +1,8 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+if($this->session->userdata('conectado') == true){ ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +32,7 @@
   <div class="navbar-inner">
     <div class="container"> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span
                     class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Administrador de Aplicaciones Nesitelco S.A. </a>
-     <!-- <div class="nav-collapse">
+      <div class="nav-collapse">
         <ul class="nav pull-right">
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
                             class="icon-cog"></i> Account <b class="caret"></b></a>
@@ -36,11 +41,17 @@
               <li><a href="javascript:;">Help</a></li>
             </ul>
           </li>
+          <?php
+      $emailUser = $this->session->userdata('email');
+      $nombreUser = $this->session->userdata('usuario');
+     // echo '<h4>'.$nombreUser.'</h4>';
+      //echo '<p>'.$emailUser.'</p>';?>
           <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="icon-user"></i> Intranet.com <b class="caret"></b></a>
+                            class="icon-user"></i> <?php echo $nombreUser; ?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
-              <li><a href="javascript:;">Profile</a></li>
-              <li><a href="javascript:;">Logout</a></li>
+              <li><a href="<?php echo base_url();?>index.php/home/salir">Salir</a></li>
+              <li><a href="javascript:;">perfil</a></li>
+              
             </ul>
           </li>
         </ul>
@@ -75,3 +86,10 @@
   <div class="main-inner">
     <div class="container">
       <div class="row">
+
+      <?php }else{
+
+  redirect(base_url());
+
+  }
+  ?>
