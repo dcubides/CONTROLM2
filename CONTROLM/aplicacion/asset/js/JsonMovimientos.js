@@ -12,10 +12,18 @@ $(document).ready(function(){
         Tmovimiento = '<table border=0 width="100%">' +
                     '<tr>' +
                       '<td>Entrega</td>' +
+<<<<<<< HEAD
                       '<td>:</td>' +
                       '<td><input type="text" class="span2" /></td>' +  
                       '<td>Tecnico</td>' +
                       '<td>:</td>' +
+=======
+                      '<td>:</td>' +
+                      '<td><input type="text" class="span2" /></td>' +  
+                      '<td>Tecnico:</td>' +
+                      
+                      //'<td>:</td>' +
+>>>>>>> 68bbe630dd69b39438dcced350e0431d17eb5f2d
                       '<td><input type="text" class="span2" /></td>' +
                       '<td>Requisición</td>' +
                       '<td>:</td>' +
