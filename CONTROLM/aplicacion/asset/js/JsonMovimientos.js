@@ -12,28 +12,26 @@ $(document).ready(function(){
         Tmovimiento = '<table border=0 width="100%">' +
                     '<tr>' +
                       '<td>Entrega</td>' +
-<<<<<<< HEAD
                       '<td>:</td>' +
                       '<td><input type="text" class="span2" /></td>' +  
                       '<td>Tecnico</td>' +
                       '<td>:</td>' +
-=======
-                      '<td>:</td>' +
+//=======
                       '<td><input type="text" class="span2" /></td>' +  
-                      '<td>Tecnico:</td>' +
-                      
-                      //'<td>:</td>' +
->>>>>>> 68bbe630dd69b39438dcced350e0431d17eb5f2d
-                      '<td><input type="text" class="span2" /></td>' +
                       '<td>Requisición</td>' +
                       '<td>:</td>' +
-                      '<td><input type="text" class="span2" /></td>' +
+                      '<td><input type="text" class="span1" /></td>' +
+                      '</tr>'+
+                      '<tr>'+
                       '<td><button type="button" class="btn" id="clear-salida"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp; </td>' +
+                      '<td></td>'+
                       '<td><button type="submit" id="SaveOrder" class="btn btn-primary"><span class="icon-save"></span> Crear Salida</button></center> </td>' +
                     '</tr>' +
                   '</table>';
                   
-        Dmovimiento = '<table id="tablaElementos" class="table table-striped table-bordered" border=0 width="100%"><tbody><tr>' + 
+                    'Detalle Movimiento';
+        Dmovimiento = '<h3>Detalle Movimiento</h3>'+
+                        '<table id="tablaElementos" class="table table-striped table-bordered" border=0 width="100%"><tbody><tr>' + 
                         '<td>Elemento</td><td><input type="text" name="elemento" id="elemento" style="width: 314px;" required /></td>' +
                         '<td>Unidad</td><td><input type="text" name="unidad" id="unidad" readonly style="width: 100px;" /></td>' +
                         '<td>Cantidad</td><td><input type="text" name="cantidad" id="cantidad" style="width: 100px;" /></td>' +
@@ -58,7 +56,8 @@ $(document).ready(function(){
                     '</tr>' +
                   '</table>'
         
-        Dmovimiento = '<table id="tablaElementos" class="table table-striped table-bordered" border=0 width="100%"><tbody>' +
+        Dmovimiento =   '<h3>Detalle Movimiento</h3>'+
+                        '<table id="tablaElementos" class="table table-striped table-bordered" border=0 width="100%"><tbody>' +
                         '<tr><td>Elemento</td><td><input type="text" name="elemento" id="elemento" style="width: 314px;" required /></td>' +
                         '<td>Unidad</td><td><input type="text" name="unidad" id="unidad" readonly style="width: 100px;" /></td>' +
                         '<td>Cantidad Legalizada</td><td><input type="text" name="cantidad" id="cantidad" style="width: 100px;" /></td></tr>' +
