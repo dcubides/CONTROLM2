@@ -64,7 +64,7 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
-$db['nesitelcodb']['hostname'] = 'localhost';
+/*$db['nesitelcodb']['hostname'] = 'localhost';
 $db['nesitelcodb']['username'] = 'root';
 $db['nesitelcodb']['password'] = '';
 $db['nesitelcodb']['database'] = 'nesitelco';
@@ -78,7 +78,7 @@ $db['nesitelcodb']['char_set'] = 'utf8';
 $db['nesitelcodb']['dbcollat'] = 'utf8_general_ci';
 $db['nesitelcodb']['swap_pre'] = '';
 $db['nesitelcodb']['autoinit'] = FALSE; //a partir de la segunda conexion es recomendable dejar este valor en false
-$db['nesitelcodb']['stricton'] = FALSE;
+$db['nesitelcodb']['stricton'] = FALSE;*/
 
 
 

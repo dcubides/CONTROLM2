@@ -2,6 +2,9 @@ $(document).ready(function(){
    $('#tipoMovimiento').change(function(){
      $('#movimiento').empty();
      $('#frmDetalleM').empty();
+
+
+   
      
      var tipoM = $('#tipoMovimiento').val();
      
@@ -13,7 +16,7 @@ $(document).ready(function(){
                     '<tr>' +
                       '<td>Entrega</td>' +
                       '<td>:</td>' +
-                      '<td><input type="text" class="span2" /></td>' +  
+                      '<td><input  autocomplete="off" name="BuscaTecnico id="BuscaTecnico" type="text" class="span2" /></td>' +  
                       '<td>Tecnico</td>' +
                       '<td>:</td>' +
 //=======

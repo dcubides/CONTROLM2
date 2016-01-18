@@ -11,6 +11,19 @@ class Salidas_bodega extends CI_Controller{
 		$this->load->view('reporte_salidas');
 		$this->load->view('plantillas/front_end/footer');
 	}
+
+	public function BuscarTecnico(){
+		
+		$this->load->model('salidas_model');
+
+		// obtenemos el array de profesiones y lo preparamos para enviar
+		$datos['arrTecnicos'] = $this->salidas_model->get_tecnicos();
+    
+		// cargamos  la interfaz y le enviamos los datos
+			$this->load->view('reporte_salidas', $datos);
+
+
+	}
     
     public function nuevaSalida(){
         session_start();
