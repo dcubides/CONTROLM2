@@ -2,6 +2,8 @@
 
 class Mi_modelo extends CI_Model {
 
+  
+
 
   public function obtenerUsuario($email,$password)
   {
@@ -28,7 +30,7 @@ class Mi_modelo extends CI_Model {
         }
 
 
-      }
+      } 
 
 }
 

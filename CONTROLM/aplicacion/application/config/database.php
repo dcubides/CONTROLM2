@@ -52,7 +52,7 @@ $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root';
 $db['default']['password'] = '';
 $db['default']['database'] = 'controlm';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
@@ -63,6 +63,23 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
+
+$db['nesitelcodb']['hostname'] = 'localhost';
+$db['nesitelcodb']['username'] = 'root';
+$db['nesitelcodb']['password'] = '';
+$db['nesitelcodb']['database'] = 'nesitelco';
+$db['nesitelcodb']['dbdriver'] = 'mysqli';
+$db['nesitelcodb']['dbprefix'] = '';
+$db['nesitelcodb']['pconnect'] = FALSE; //false recomendado para poder trabajar con ambas bases en paralelo
+$db['nesitelcodb']['db_debug'] = TRUE;
+$db['nesitelcodb']['cache_on'] = FALSE;
+$db['nesitelcodb']['cachedir'] = '';
+$db['nesitelcodb']['char_set'] = 'utf8';
+$db['nesitelcodb']['dbcollat'] = 'utf8_general_ci';
+$db['nesitelcodb']['swap_pre'] = '';
+$db['nesitelcodb']['autoinit'] = FALSE; //a partir de la segunda conexion es recomendable dejar este valor en false
+$db['nesitelcodb']['stricton'] = FALSE;
+
 
 
 /* End of file database.php */
