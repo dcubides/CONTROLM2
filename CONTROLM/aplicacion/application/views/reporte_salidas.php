@@ -3,7 +3,7 @@ if($this->session->userdata('conectado') == true){ ?>
 
 
 <script src="<?php echo base_url()?>asset/js/jquery-1.10.2.js"></script>
-<script src="<?php echo base_url()?>asset/js/jquery-ui.js"></script>
+
 <!--<script src="<?php echo base_url();?>asset/js/JsonVenta.js"></script>-->
 <script src="<?php echo base_url();?>asset/js/JsonMovimientos.js"></script>
 

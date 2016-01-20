@@ -21,12 +21,12 @@
 <!-- Le javascript
 ================================================== --> 
 <!-- Placed at the end of the document so the pages load faster --> 
-<script src="<?php echo base_url();?>asset/js/jquery-1.10.2.min.js"></script> 
+
 <script src="<?php echo base_url();?>asset/js/jquery-1.7.2.min.js"></script> 
 <script src="<?php echo base_url();?>asset/js/excanvas.min.js"></script> 
 <script src="<?php echo base_url();?>asset/js/chart.min.js" type="text/javascript"></script> 
 <script src="<?php echo base_url();?>asset/js/bootstrap.js"></script>
-<script language="javascript" type="text/javascript" src="ssets/js/full-calendar/fullcalendar.min.js"></script>
+<script language="javascript" type="text/javascript" src="<?php echo base_url();?>asset/js/full-calendar/fullcalendar.min.js"></script>
  
 <script src="<?php echo base_url();?>asset/js/base.js"></script> 
 

@@ -11,6 +11,7 @@ if($this->session->userdata('conectado') == true){ ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <link href="<?php echo base_url();?>asset/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?php echo base_url();?>asset/css/bootstrap.min.js" rel="stylesheet">
 <link href="<?php echo base_url();?>asset/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
         rel="stylesheet">
@@ -68,10 +69,10 @@ if($this->session->userdata('conectado') == true){ ?>
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="<?php echo site_url('salidas_bodega')?>"><i class="icon-dashboard"></i><span>Reportes de Movimientos </span> </a> </li>
-         <li class="active"><a href=""><i class="icon-dashboard"></i><span>Reportes de Devoluciones</span> </a> </li>
+        <li class="active"><a href="<?php echo site_url('reporte_salidas')?>"><i class="icon-dashboard"></i><span>Reporte de Salida </span> </a> </li>
+         <li class="active"><a href="<?php echo site_url('reporte_entradas')?>"><i class="icon-dashboard"></i><span>Reportes de Devoluciones</span> </a> </li>
         <li class="active"><a href='<?php echo site_url('reportes_movimientos/informe_movimiento')?>'><i class="icon-list-alt"></i><span>Informes Movimientos</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('productos/resultados')?>'><i class="icon-facetime-video"></i><span>Informes</span> </a></li>
+        <li class="active"><a href='<?php echo site_url('salidas_bodega')?>'><i class="icon-facetime-video"></i><span>Informes</span> </a></li>
         <li class="active"><a href="<?php echo base_url();?>index.php/home/salir"><i class="icon-bar-chart"></i><span>Salir</span> </a> </li>
        
        
@@ -85,7 +86,7 @@ if($this->session->userdata('conectado') == true){ ?>
 <div class="main">
   <div class="main-inner">
     <div class="container">
-      <div class="row">
+     
 
       <?php }else{
 

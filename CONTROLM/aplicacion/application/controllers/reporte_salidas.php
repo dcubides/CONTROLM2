@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 date_default_timezone_set("America/Bogota");
-class Salidas_bodega extends CI_Controller{
+class Reporte_salidas extends CI_Controller{
 
 	function __construct(){
 		parent:: __construct();
@@ -8,9 +8,17 @@ class Salidas_bodega extends CI_Controller{
 
 	public function index(){
 		$this->load->view("plantillas/front_end/header");
+		$this->load->view('movimiento_salidas');
+		$this->load->view('plantillas/front_end/footer');
+	}
+
+	public function index2(){
+		$this->load->view("plantillas/front_end/header");
 		$this->load->view('reporte_salidas');
 		$this->load->view('plantillas/front_end/footer');
 	}
+
+
 
 	public function BuscarTecnico(){
 		
