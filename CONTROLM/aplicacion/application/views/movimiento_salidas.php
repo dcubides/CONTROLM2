@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 if($this->session->userdata('conectado') == true){ ?>
 
+<script src="<?php echo base_url()?>asset/js/jquery-1.10.2.js"></script>
+<script src="<?php echo base_url()?>asset/js/jquery-ui.js"></script>
+<script src="<?php echo base_url()?>asset/js/JsonMovimientosSalidas.js"></script>
 
-
-<script src="<?php echo base_url()?>asset/js/jquery-1.7.2.js"></script>
-
-  <div class"cintainer">
+<div class"cintainer">
  
 <h1 class="page-header"><span class="icon-play-circle"></span> Nuevo Movimiento</h1>
 
@@ -60,7 +60,7 @@ if($this->session->userdata('conectado') == true){ ?>
                   <h2 class="page-header"><span class="icon-th-list"></span> Detalle Movimiento</h2>
 
 
-                      <br>
+                      <br />
 
 
                      <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
@@ -75,7 +75,7 @@ if($this->session->userdata('conectado') == true){ ?>
                        </thead>
                      </table>
 
-                      <br>
+                      <br />
 
 
 
@@ -101,14 +101,6 @@ if($this->session->userdata('conectado') == true){ ?>
 
         </div>
       </div>
-    
- 
-
- 
-
-
-
-
 
 <?php }else{
 

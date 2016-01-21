@@ -4,12 +4,13 @@ class Reporte_salidas extends CI_Controller{
 
 	function __construct(){
 		parent:: __construct();
+        $this->load->model('salidas_model');
 	}
 
 	public function index(){
-		$this->load->view("plantillas/front_end/header");
+	    $this->load->view("plantillas/front_end/header");
 		$this->load->view('movimiento_salidas');
-		$this->load->view('plantillas/front_end/footer');
+		$this->load->view('plantillas/front_end/footer');        
 	}
 
 	public function index2(){
@@ -18,19 +19,12 @@ class Reporte_salidas extends CI_Controller{
 		$this->load->view('plantillas/front_end/footer');
 	}
 
-
-
 	public function BuscarTecnico(){
-		
-		$this->load->model('salidas_model');
-
-		// obtenemos el array de profesiones y lo preparamos para enviar
-		$datos['arrTecnicos'] = $this->salidas_model->get_tecnicos();
-    
-		// cargamos  la interfaz y le enviamos los datos
-			$this->load->view('reporte_salidas', $datos);
-
-
+	   // obtenemos el array de profesiones y lo preparamos para enviar
+	   $datos = $this->salidas_model->buscartecnico();
+       
+       // cargamos  la interfaz y le enviamos los datos
+       echo json_encode($datos);
 	}
     
     public function nuevaSalida(){
