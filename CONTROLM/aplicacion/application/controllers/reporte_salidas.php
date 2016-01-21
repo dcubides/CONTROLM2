@@ -21,7 +21,7 @@ class Reporte_salidas extends CI_Controller{
     
     public function EncargadoBodega(){
 	   // obtenemos el array de profesiones y lo preparamos para enviar
-       $filtro = '';
+       $filtro = $this->input->get("term");
 	   $datos = $this->salidas_model->buscarencargado($filtro);
        
        // cargamos  la interfaz y le enviamos los datos
@@ -46,12 +46,24 @@ class Reporte_salidas extends CI_Controller{
         echo json_encode($datos);
     }
     
-    public function nuevaSalida(){
+    public function nuevaSalida($entrega, $recibe, $requisicion){
         session_start();
         $fecha = date('Y-m-d');
         
         $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $this->seguridad_model->SessionActivo($url);
+        
+        $arraySalida = array(
+                         "fecha_movimiento"   => date('Y-m-d H:i:s'),
+                         "tipo"               => "Salida",
+                         "quien_entrega"      => $entrega,
+                         "quien_recibe"       => $recibe,
+                         "estado"             => "PENDIENTE",
+                         "requisicion"        => $requisicion,
+                         "usuario"            => $this->session->userdata('idusuario')
+        );
+        
+        $crearSalida = $this->salidas_model->crearSalida($arraySalida);
     }
 }
 ?>

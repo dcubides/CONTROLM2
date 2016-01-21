@@ -37,12 +37,7 @@ if($this->session->userdata('conectado') == true){ ?>
               
              <tr id="movimiento"></tr>
             </table>
-          </form>
-
-
-          <form name="frmDetalleM" id="frmDetalleM" class="form-horizontal" role="form">
-
-          <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
+            <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>
                        <tr>
                        <th style="text-align: center;">Entrega: <input class="span2" type="text" name="quien_entrega" id="quien_entrega"/><th>
@@ -56,8 +51,10 @@ if($this->session->userdata('conectado') == true){ ?>
                        </tr>
                        </thead>
             </table>
+          </form>
 
-                  
+
+          <form name="frmDetalleM" id="frmDetalleM" class="form-horizontal" role="form">
                   <h2 class="page-header"><span class="icon-th-list"></span> Detalle Movimiento</h2>
 
 

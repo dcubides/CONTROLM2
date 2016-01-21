@@ -20,8 +20,14 @@ class Salidas_model extends CI_Model {
     
     public function buscarrequisiones($filtro){
         //armamos la consulta
-       $query = $this->db->query('SELECT id FROM nesitelco.SOLICITUDES_BODEGA WHERE ESTADO="ATENDIDA" AND id like "%'.$filtro.'%"');
+       $query = $this->db->query('SELECT id as label FROM nesitelco.SOLICITUDES_BODEGA WHERE ESTADO="ATENDIDA" AND id like "%'.$filtro.'%"');
        return $query->result();
+    }
+    
+    public function crearSalida($arraySalida){
+        $this->db->trans_start();
+     	$this->db->insert('movimientos', $arrarOrder);
+     	$this->db->trans_complete();
     }
 }
 ?>
