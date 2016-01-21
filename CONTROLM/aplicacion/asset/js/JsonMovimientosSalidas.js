@@ -1,18 +1,18 @@
 var currentLocation = window.location;
-$(document).ready(function(){
+$(function(){
+    var encargado = currentLocation + "/ListarTecnicos";
     $('#quien_recive').autocomplete({
-        source: currentLocation + "/BuscarTecnico",
-        select: function(event, ui){
-            
-        }
-        
+        source: encargado
     });
     
     $('#quien_entrega').autocomplete({
-        source: currentLocation + "/BuscarEncargado",
-        select: function(event, ui){
-            
-        }
-        
+        source: currentLocation + "/EncargadoBodega"
     });
+    $('#requisicion').autocomplete({
+        source: currentLocation + "/Requisiciones"
+    });
+});
+
+$(document).ready(function(){
+    
 });

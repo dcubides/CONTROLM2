@@ -6,53 +6,22 @@ class Salidas_model extends CI_Model {
 		parent::__construct();
 	}
     
-    public function buscarencargado(){
+    public function buscarencargado($filtro){
         //armamos la consulta
-       $query = $this->db->query('SELECT CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.directorio where directorio.activos_bodega=1');
+       $query = $this->db->query('SELECT CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.DIRECTORIO where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%" and DIRECTORIO.activos_bodega=1 AND ESTADO="ALTA" ORDER BY concat(NOMBRE, " ", APELLIDOS) ASC');
        return $query->result();
-       /*
-       //SI HAY RESULTADOS
-       if ($query->num_rows() > 0) {
-         //almacenamos en matriz bidimencional
-         foreach ($query->result() as $row) {
-            $arrDatos[htmlspecialchars($row->CEDULA, ENT_QUOTES)] = htmlspecialchars($row->label);
-            $query->free_result();
-            return $arrDatos;
-         }
-       }*/
     }
     
-	public function buscartecnico(){
+	public function buscartecnico($filtro){
 	   //armamos la consulta
-       $query = $this->db->query('SELECT CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.directorio');
-       
+       $query = $this->db->query('SELECT CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.DIRECTORIO where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%" and CEDULA>0 AND ESTADO="ALTA" ORDER BY concat(NOMBRE, " ", APELLIDOS) ASC');
        return $query->result();
-       /*
-       //SI HAY RESULTADOS
-       if ($query->num_rows() > 0) {
-         //almacenamos en matriz bidimencional
-         foreach ($query->result() as $row) {
-            $arrDatos[htmlspecialchars($row->CEDULA, ENT_QUOTES)] = htmlspecialchars($row->label);
-            $query->free_result();
-            return $arrDatos;
-         }
-       }*/
     }
     
-    public function buscarrequisiones(){
+    public function buscarrequisiones($filtro){
         //armamos la consulta
-       $query = $this->db->query('SELECT id FROM ');
+       $query = $this->db->query('SELECT id FROM nesitelco.SOLICITUDES_BODEGA WHERE ESTADO="ATENDIDA" AND id like "%'.$filtro.'%"');
        return $query->result();
-       /*
-       //SI HAY RESULTADOS
-       if ($query->num_rows() > 0) {
-         //almacenamos en matriz bidimencional
-         foreach ($query->result() as $row) {
-            $arrDatos[htmlspecialchars($row->CEDULA, ENT_QUOTES)] = htmlspecialchars($row->label);
-            $query->free_result();
-            return $arrDatos;
-         }
-       }*/
     }
 }
 ?>

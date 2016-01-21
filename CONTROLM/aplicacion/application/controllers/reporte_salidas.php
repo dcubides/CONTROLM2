@@ -19,21 +19,32 @@ class Reporte_salidas extends CI_Controller{
 		$this->load->view('plantillas/front_end/footer');
 	}
     
-    public function BuscarEncargado(){
+    public function EncargadoBodega(){
 	   // obtenemos el array de profesiones y lo preparamos para enviar
-	   $datos = $this->salidas_model->buscarencargado();
+       $filtro = '';
+	   $datos = $this->salidas_model->buscarencargado($filtro);
        
        // cargamos  la interfaz y le enviamos los datos
        echo json_encode($datos);
 	}
     
-	public function BuscarTecnico(){
+	public function ListarTecnicos(){
+	   $filtro = $this->input->get("term");
 	   // obtenemos el array de profesiones y lo preparamos para enviar
-	   $datos = $this->salidas_model->buscartecnico();
+	   $datos = $this->salidas_model->buscartecnico($filtro);
        
        // cargamos  la interfaz y le enviamos los datos
        echo json_encode($datos);
 	}
+    
+    public function Requisiciones(){
+        $filtro = $this->input->get("term");
+        // obtenemos el array de profesiones y lo preparamos para enviar
+        $datos = $this->salidas_model->buscarrequisiones($filtro);
+        
+        // cargamos  la interfaz y le enviamos los datos
+        echo json_encode($datos);
+    }
     
     public function nuevaSalida(){
         session_start();
