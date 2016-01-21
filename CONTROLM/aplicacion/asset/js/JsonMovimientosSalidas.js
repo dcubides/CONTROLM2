@@ -7,4 +7,12 @@ $(document).ready(function(){
         }
         
     });
+    
+    $('#quien_entrega').autocomplete({
+        source: currentLocation + "/BuscarEncargado",
+        select: function(event, ui){
+            
+        }
+        
+    });
 });

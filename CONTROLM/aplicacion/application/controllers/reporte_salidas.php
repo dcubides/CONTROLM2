@@ -18,7 +18,15 @@ class Reporte_salidas extends CI_Controller{
 		$this->load->view('reporte_salidas');
 		$this->load->view('plantillas/front_end/footer');
 	}
-
+    
+    public function BuscarEncargado(){
+	   // obtenemos el array de profesiones y lo preparamos para enviar
+	   $datos = $this->salidas_model->buscarencargado();
+       
+       // cargamos  la interfaz y le enviamos los datos
+       echo json_encode($datos);
+	}
+    
 	public function BuscarTecnico(){
 	   // obtenemos el array de profesiones y lo preparamos para enviar
 	   $datos = $this->salidas_model->buscartecnico();
