@@ -13,7 +13,7 @@ if($this->session->userdata('conectado') == true){ ?>
       
         <div class="widget-content">
 
-          <form name="formulario" id="formulario" class="form-horizontal" role="form">
+          <form name="formulario" method="post" id="formulario" action="<?php echo base_url(); ?>index.php/reporte_salidas/nuevassalida" class="form-horizontal" role="form">
 
             <h2><span class="icon-upload"></span> Nueva Salida</h2>
             
@@ -59,7 +59,7 @@ if($this->session->userdata('conectado') == true){ ?>
 
 
                       <br />
-
+                        <h3> </h3>
 
                      <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>

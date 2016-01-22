@@ -52,6 +52,8 @@ class Reporte_salidas extends CI_Controller{
         
         $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $this->seguridad_model->SessionActivo($url);
+
+
         
         $arraySalida = array(
                          "fecha_movimiento"   => date('Y-m-d H:i:s'),
@@ -65,5 +67,45 @@ class Reporte_salidas extends CI_Controller{
         
         $crearSalida = $this->salidas_model->crearSalida($arraySalida);
     }
+
+    public function nuevassalida(){
+
+
+    		$this->load->library('form_validation');
+        $this->data['custom_error'] = '';
+
+
+    	$data = array(
+                'fecha_movimiento' => date('Y-m-d H:i:s'),
+                'tipo' => "Salida",
+                "quien_entrega"      => $this->input->post('quien_entrega'),
+                "quien_recibe"       => $this->input->post('quien_recive'),
+                "estado"             => "PENDIENTE",
+                "requisicion"        => $this->input->post('requisicion'),
+                 "usuario"            => $this->session->userdata('idusuario')
+
+                
+            );
+
+    	 if (is_numeric($id = $this->salidas_model->add('movimientos', $data, true)) ) {
+                $this->session->set_flashdata('success','Venda iniciada com exito, adicione los produtos.');
+                redirect('reporte_salidas/editar/'.$id);
+
+            } else {
+                
+                $this->data['custom_error'] = '<div class="form_error"><p>Ocorreu um erro.</p></div>';
+            }
+        }
+
+
+
+    public function editar(){
+
+
+    	
+    }
+        
+
+
 }
 ?>

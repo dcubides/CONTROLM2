@@ -1,12 +1,12 @@
 var currentLocation = window.location;
 
 $(function(){
-    /*$('#quien_recive').autocomplete({
+    $('#quien_recive').autocomplete({
         source: currentLocation + "/ListarTecnicos"
     });
     $('#quien_entrega').autocomplete({
         source: currentLocation + "/EncargadoBodega"
-    });*/
+    });
     $('#requisicion').autocomplete({
         source: currentLocation + "/Requisiciones"
     });
