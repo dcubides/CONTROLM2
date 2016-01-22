@@ -46,20 +46,22 @@ class Reporte_salidas extends CI_Controller{
         echo json_encode($datos);
     }
     
-    public function nuevaSalida($entrega, $recibe, $requisicion){
+    public function nuevaSalida(){
         session_start();
         $fecha = date('Y-m-d');
         
-        $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $this->seguridad_model->SessionActivo($url);
+        $Salida = json_decode($this->input->post('MiSalida'));        
+        
+        $entrega = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
+        $recibe = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
         
         $arraySalida = array(
                          "fecha_movimiento"   => date('Y-m-d H:i:s'),
-                         "tipo"               => "Salida",
+                         "tipo"               => $Salida->tipo,
                          "quien_entrega"      => $entrega,
                          "quien_recibe"       => $recibe,
-                         "estado"             => "PENDIENTE",
-                         "requisicion"        => $requisicion,
+                         "estado"             => $Salida->estado,
+                         "requisicion"        => $Salida->requisicion,
                          "usuario"            => $this->session->userdata('idusuario')
         );
         

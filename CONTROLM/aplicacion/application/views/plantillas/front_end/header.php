@@ -18,6 +18,7 @@ if($this->session->userdata('conectado') == true){ ?>
 <link href="<?php echo base_url();?>asset/css/font-awesome.css" rel="stylesheet">
 <link href="<?php echo base_url();?>asset/css/style.css" rel="stylesheet">
 <link href="<?php echo base_url();?>asset/css/pages/dashboard.css" rel="stylesheet">
+<link href="<?php echo base_url();?>asset/css/jquery-impromptu.css" rel="stylesheet">
 
 
 

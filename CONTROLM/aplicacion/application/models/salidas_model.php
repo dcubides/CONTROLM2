@@ -24,9 +24,18 @@ class Salidas_model extends CI_Model {
        return $query->result();
     }
     
+    public function obternerCedulas($nombre){
+        $query = $this->db->query('SELECT CEDULA FROM nesitelco.DIRECTORIO where concat(NOMBRE, " ", APELLIDOS) = "'.$nombre.'"');
+        $cedula = "";
+        foreach ($query->result_array() as $row){
+            $cedula = $row['CEDULA'];
+        }
+        return $cedula;
+    }
+    
     public function crearSalida($arraySalida){
         $this->db->trans_start();
-     	$this->db->insert('movimientos', $arrarOrder);
+     	$this->db->insert('movimientos', $arraySalida);
      	$this->db->trans_complete();
     }
 }
