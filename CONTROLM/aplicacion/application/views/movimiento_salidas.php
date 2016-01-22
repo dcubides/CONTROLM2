@@ -7,7 +7,7 @@ if($this->session->userdata('conectado') == true){ ?>
 <script src="<?php echo base_url()?>asset/js/JsonMovimientosSalidas.js"></script>
 
 <div class"cintainer">
- 
+<div id="mensaje"></div> 
 <h1 class="page-header"><span class="icon-play-circle"></span> Nuevo Movimiento</h1>
   <div class="widget-content">
     <form name="formulario" id="formulario" class="form-horizontal" role="form">
@@ -18,11 +18,9 @@ if($this->session->userdata('conectado') == true){ ?>
           <td colspan="10">
             <table>
               <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;Salidas:&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                  <select name="tipoMovimiento" id="tipoMovimiento" class="span2" >
-                    <option>Salida</option>
-                  </select>
+                  <input type="text" name="idSalidas" id="idSalidas" class="span2" />
                 </td>
               </tr>
             </table>

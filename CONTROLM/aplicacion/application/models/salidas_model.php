@@ -33,10 +33,17 @@ class Salidas_model extends CI_Model {
         return $cedula;
     }
     
+    public function obtenerSalidas($filtro){
+        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%" order by id desc');
+        return $query->result();
+    }
+    
     public function crearSalida($arraySalida){
         $this->db->trans_start();
      	$this->db->insert('movimientos', $arraySalida);
+        $ids = $this->db->insert_id();
      	$this->db->trans_complete();
+     	return $ids;
     }
 }
 ?>

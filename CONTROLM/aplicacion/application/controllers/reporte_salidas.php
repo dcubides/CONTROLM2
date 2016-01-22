@@ -51,6 +51,7 @@ class Reporte_salidas extends CI_Controller{
         $fecha = date('Y-m-d');
         
         $Salida = json_decode($this->input->post('MiSalida'));        
+        $arrayResponse = array("id"=>"0","Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
         
         $entrega = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
         $recibe = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
@@ -66,6 +67,11 @@ class Reporte_salidas extends CI_Controller{
         );
         
         $crearSalida = $this->salidas_model->crearSalida($arraySalida);
+        if($crearSalida!=0){
+            $arrayResponse = array("id"=>$crearSalida,"Msg"=>"<strong>Movimiento de salida creado: ".$crearSalida."</strong>, El movimiento de salida se Guardado Correctamente", "TipoMsg"=>"Sucefull");
+        }
+        
+        echo json_encode($arrayResponse);
     }
 }
 ?>

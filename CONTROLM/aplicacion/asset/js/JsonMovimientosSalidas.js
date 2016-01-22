@@ -21,7 +21,6 @@ $(document).ready(function(){
     
     $('#salvar-salida').click(function(){
         $("form#formulario").submit(function(){
-            
             $.prompt("¿Desea generar una nueva salida?", {
                 title: "Control de inventarios. Salida de bodega",
                 buttons: { "Si, crear salida": true, "No, cerrar esta ventana": false },
@@ -38,16 +37,21 @@ $(document).ready(function(){
                         Salida.usuario = '';
                         
                         var DatosJson = JSON.stringify(Salida);
-                        $.post(currentLocation + '/nuevaSalida',{
+                        $.post(currentLocation + '/nuevaSalida',
+                        {
                             MiSalida: DatosJson
                         },
-                        function(data, textStatus){
-                            
-                        }
+                        function(data, textStatus) {
+                            if(data.TipoMsg=="Error"){
+                                $("#mensaje").html("<div class='alert alert-danger text-center' alert-dismissable><button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
+                            }else{
+                                $("#mensaje").html("<div class='alert alert-success text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
+                            }
+                        },
+                        "json"
                         );
                     }
                     $.prompt.close();
-                    
                     $('#salvar-salida').unbind('click');
                 }
             });
