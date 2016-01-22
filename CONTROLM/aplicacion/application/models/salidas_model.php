@@ -24,26 +24,19 @@ class Salidas_model extends CI_Model {
        return $query->result();
     }
     
+    public function obternerCedulas($nombre){
+        $query = $this->db->query('SELECT CEDULA FROM nesitelco.DIRECTORIO where concat(NOMBRE, " ", APELLIDOS) = "'.$nombre.'"');
+        $cedula = "";
+        foreach ($query->result_array() as $row){
+            $cedula = $row['CEDULA'];
+        }
+        return $cedula;
+    }
+    
     public function crearSalida($arraySalida){
         $this->db->trans_start();
-     	$this->db->insert('movimientos', $arrarOrder);
+     	$this->db->insert('movimientos', $arraySalida);
      	$this->db->trans_complete();
     }
-
-    function add($table,$data,$returnId = false){
-        $this->db->insert($table, $data);         
-        if ($this->db->affected_rows() == '1')
-    {
-                        if($returnId == true){
-                            return $this->db->insert_id($table);
-                        }
-      return TRUE;
-    }
-    
-    return FALSE;       
-    }
-    
-
-    
 }
 ?>
