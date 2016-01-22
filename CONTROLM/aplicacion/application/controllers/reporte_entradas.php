@@ -66,25 +66,25 @@ class Reporte_entradas extends CI_Controller{
         session_start();
         $fecha = date('Y-m-d');
         
-        $Salida = json_decode($this->input->post('MiSalida'));        
+        $Entrada = json_decode($this->input->post('MiEntrada'));        
         $arrayResponse = array("id"=>"0","Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
         
-        $entrega = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
-        $recibe = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
+        $entrega = $this->entradas_model->obternerCedulas($Entrada->quien_recibe);
+        $recibe = $this->entradas_model->obternerCedulas($Entrada->quien_entrega);
         
-        $arraySalida = array(
+        $arrayEntrada = array(
                          "fecha_movimiento"   => date('Y-m-d H:i:s'),
-                         "tipo"               => $Salida->tipo,
+                         "tipo"               => $Entrada->tipo,
                          "quien_entrega"      => $entrega,
                          "quien_recibe"       => $recibe,
-                         "estado"             => $Salida->estado,
-                         "requisicion"        => $Salida->requisicion,
+                         "estado"             => $Entrada->estado,
+                         //"requisicion"        => $Entrada->requisicion,
                          "usuario"            => $this->session->userdata('idusuario')
         );
         
-        $crearSalida = $this->salidas_model->crearSalida($arraySalida);
-        if($crearSalida!=0){
-            $arrayResponse = array("id"=>$crearSalida,"Msg"=>"<strong>Salida: ".$crearSalida."</strong>, El movimiento de salida se Guardado Correctamente", "TipoMsg"=>"Sucefull");
+        $crearEntrada = $this->entradas_model->crearEntrada($arrayEntrada);
+        if($crearEntrada!=0){
+            $arrayResponse = array("id"=>$crearEntrada,"Msg"=>"<strong>Salida: ".$crearEntrada."</strong>, El movimiento de Entrada se Guardado Correctamente", "TipoMsg"=>"Sucefull");
         }
         
         echo json_encode($arrayResponse);

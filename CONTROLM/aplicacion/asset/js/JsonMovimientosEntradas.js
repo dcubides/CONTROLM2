@@ -10,7 +10,7 @@ $(function(){
     $('#ticket').autocomplete({
         source: currentLocation + "/Tickets"
     });
-    $('#idSalidas').autocomplete({
+    $('#idEntradas').autocomplete({
         source: currentLocation + "/Salidas"
     });
     $('#elemento').autocomplete({
@@ -35,11 +35,11 @@ $(document).ready(function(){
     
     $('#frmDetalleM').find('input, textarea, select').attr('disabled', 'disabled');
     
-    $('#salvar-salida').click(function(){
+    $('#salvar-entrada').click(function(){
         $("form#formulario").submit(function(){
-            $.prompt("¿Desea generar una nueva salida?", {
-                title: "Control de inventarios. Salida de bodega",
-                buttons: { "Si, crear salida": true, "No, cerrar esta ventana": false },
+            $.prompt("¿Desea generar una nueva entrada?", {
+                title: "Control de inventarios. Devolucion tecnico",
+                buttons: { "Si, crear entrada": true, "No, cerrar esta ventana": false },
                 submit: function(e,v,m,f){
                     if(v==true){
                         var Salida = new Object();
@@ -49,7 +49,7 @@ $(document).ready(function(){
                         Salida.quien_entrega = $('#quien_entrega').val();
                         Salida.quien_recibe = $('#quien_recibe').val();
                         Salida.estado = 'Terminado';
-                        Salida.requisicion = $('#ticket').val();
+                        //Salida.requisicion = $('#ticket').val();
                         Salida.usuario = '';
                         
                         var DatosJson = JSON.stringify(Salida);
@@ -61,14 +61,14 @@ $(document).ready(function(){
                             if(data.TipoMsg=="Error"){
                                 $("#mensaje").html("<div class='alert alert-danger text-center' alert-dismissable><button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
                             }else{
-                                $('#idSalidas').val(data.id);
+                                $('#idEntradas').val(data.id);
                                 $("#mensaje").html("<div class='alert alert-success text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
                                 
                                 $('#formulario').find('input, textarea, select, button').attr('disabled', 'disabled');
                                 $('#frmDetalleM').find('input, textarea, select').removeAttr("disabled");
-                                $('#idSalidas').find('input, textarea, select').removeAttr("disabled");
+                                $('#idEntradas').find('input, textarea, select').removeAttr("disabled");
                                                                 
-                                $('clear-salida').removeAttr("disabled");
+                                $('clear-entrada').removeAttr("disabled");
                                 $('#elemento').focus();
                             }
                             
@@ -78,7 +78,7 @@ $(document).ready(function(){
                         );
                     }
                     $.prompt.close();
-                    $('#salvar-salida').unbind('click');
+                    $('#salvar-entrada').unbind('click');
                 }
             });
         });
@@ -175,7 +175,7 @@ $(document).ready(function(){
                         var DatosJson = JSON.stringify(Salida);
                         $.post(currentLocation + '/sacar',
                         {
-                            MiSalida: DatosJson
+                            MiEntrada: DatosJson
                         },
                         function(data, textStatus) {
                             $("#mensaje").empty();

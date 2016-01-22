@@ -20,9 +20,9 @@ if($this->session->userdata('conectado') == true){ ?>
           <td colspan="10">
             <table>
               <tr>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;Salidas:&nbsp;&nbsp;&nbsp;</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;Entrada:&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                  <input type="text" name="idSalidas" id="idSalidas" class="span2" />
+                  <input type="text" name="idEntradas" id="idEntradas" class="span2" />
                 </td>
               </tr>
             </table>
@@ -105,7 +105,7 @@ if($this->session->userdata('conectado') == true){ ?>
                       </table>
 
                        <center>
-                  <button type="button" class="btn" id="clear-salida"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp;
+                  <button type="button" class="btn" id="clear-entrada"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp;
                   <button type="reset" id="cancelar-movimiento" class="btn btn-default" onclick="javascript:location.reload();"><span class="icon-retweet"></span> Cancelar Salida</button> &nbsp;
                  <button type="button" id="salvar-detalle" class="btn btn-primary"><span class="icon-save"></span> Confirmar Salida</button></center>
                 </form>
