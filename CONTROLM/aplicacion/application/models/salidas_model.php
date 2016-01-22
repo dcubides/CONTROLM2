@@ -38,9 +38,22 @@ class Salidas_model extends CI_Model {
         return $query->result();
     }
     
+    public function obtenerElementos($filtro){
+        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, UNIDAD, replace(format(VALOR, 0), ",", ".") as VALOR FROM nesitelco.CATALOGO_BODEGA where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" order by id desc');
+        return $query->result();
+    }
+    
     public function crearSalida($arraySalida){
         $this->db->trans_start();
      	$this->db->insert('movimientos', $arraySalida);
+        $ids = $this->db->insert_id();
+     	$this->db->trans_complete();
+     	return $ids;
+    }
+    
+    public function guardarDetalle($arrayDetalleSalida){
+        $this->db->trans_start();
+     	$this->db->insert('detalle_movimiento', $arrayDetalleSalida);
         $ids = $this->db->insert_id();
      	$this->db->trans_complete();
      	return $ids;
