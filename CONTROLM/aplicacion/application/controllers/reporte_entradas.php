@@ -14,25 +14,60 @@ class Reporte_entradas extends CI_Controller{
 
 
 
-	public function BuscarTecnico(){
-		
-		$this->load->model('salidas_model');
-
-		// obtenemos el array de profesiones y lo preparamos para enviar
-		$datos['arrTecnicos'] = $this->salidas_model->get_tecnicos();
-    
-		// cargamos  la interfaz y le enviamos los datos
-			$this->load->view('reporte_salidas', $datos);
-
-
+	 public function EncargadoBodega(){
+	   // obtenemos el array de profesiones y lo preparamos para enviar
+       $filtro = $this->input->get("term");
+	   $datos = $this->salidas_model->buscarencargado($filtro);
+       
+       // cargamos  la interfaz y le enviamos los datos
+       echo json_encode($datos);
 	}
+    
+	public function ListarTecnicos(){
+	   $filtro = $this->input->get("term");
+	   // obtenemos el array de profesiones y lo preparamos para enviar
+	   $datos = $this->salidas_model->buscartecnico($filtro);
+       
+       // cargamos  la interfaz y le enviamos los datos
+       echo json_encode($datos);
+	}
+    
+    public function Requisiciones(){
+        $filtro = $this->input->get("term");
+        // obtenemos el array de profesiones y lo preparamos para enviar
+        $datos = $this->salidas_model->buscarrequisiones($filtro);
+        
+        // cargamos  la interfaz y le enviamos los datos
+        echo json_encode($datos);
+    }
     
     public function nuevaSalida(){
         session_start();
         $fecha = date('Y-m-d');
         
-        $url="http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-        $this->seguridad_model->SessionActivo($url);
+        $Salida = json_decode($this->input->post('MiSalida'));        
+        $arrayResponse = array("id"=>"0","Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
+        
+        $entrega = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
+        $recibe = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
+        
+        $arraySalida = array(
+                         "fecha_movimiento"   => date('Y-m-d H:i:s'),
+                         "tipo"               => $Salida->tipo,
+                         "quien_entrega"      => $entrega,
+                         "quien_recibe"       => $recibe,
+                         "estado"             => $Salida->estado,
+                         "requisicion"        => $Salida->requisicion,
+                         "usuario"            => $this->session->userdata('idusuario')
+        );
+        
+        $crearSalida = $this->salidas_model->crearSalida($arraySalida);
+        if($crearSalida!=0){
+            $arrayResponse = array("id"=>$crearSalida,"Msg"=>"<strong>Movimiento de salida creado: ".$crearSalida."</strong>, El movimiento de salida se Guardado Correctamente", "TipoMsg"=>"Sucefull");
+        }
+        
+        echo json_encode($arrayResponse);
     }
+    
 }
 ?>

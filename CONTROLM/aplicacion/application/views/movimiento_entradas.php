@@ -25,9 +25,9 @@ if($this->session->userdata('conectado') == true){ ?>
                 <td colspan="10">
                   <table>
                     <tr>
-                      <td>&nbsp;&nbsp;&nbsp;&nbsp;Tipo:&nbsp;&nbsp;&nbsp;</td>
+                      <td>&nbsp;&nbsp;&nbsp;&nbsp;Entradas:&nbsp;&nbsp;&nbsp;</td>
                       <td>
-                        <select name="tipoMovimiento" id="tipoMovimiento" class="span2" >
+                        <select name="idEntrada" id="idEntrada" class="span2" >
                         <option>Entrada</option>
                         </select>
                       </td>
@@ -53,7 +53,7 @@ if($this->session->userdata('conectado') == true){ ?>
                        
                        <th style="text-align: center;"><center><button type="button" class="btn" id="clear-entrada"><span class="icon-repeat"></span> Nueva Entrada</button></center></th>
 
-                       <th style="text-align: center;"><center><button type="button" class="btn btn-primary" id="salvar-entrada"><span class="icon-save"></span> Guardar Entrada</button></center></th>
+                       <th style="text-align: center;"><center><button type="submit" class="btn btn-primary" id="salvar-entrada"><span class="icon-save"></span> Guardar Entrada</button></center></th>
 
                        </tr>
                        </thead>
