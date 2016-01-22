@@ -35,7 +35,7 @@ if($this->session->userdata('conectado') == true){ ?>
             <th style="text-align: center;">Técnico: <input class="span2" type="text" name="quien_recive" id="quien_recive" required=""/></th>
             <th style="text-align: center;">Requisición: <input class="span2" type="text" name="requisicion" id="requisicion" required=""/></th>
             
-            <th style="text-align: center;"><center><button type="submit" class="btn btn-primary" id="salvar-entrada"><span class="icon-save"></span> Guardar Salida</button></center></th>
+            <th style="text-align: center;"><center><button type="submit" class="btn btn-primary" id="salvar-salida"><span class="icon-save"></span> Guardar Salida</button></center></th>
           </tr>
         </thead>
       </table>
