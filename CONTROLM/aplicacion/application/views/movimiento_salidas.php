@@ -4,7 +4,7 @@ if($this->session->userdata('conectado') == true){ ?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="<?php echo base_url()?>asset/js/jquery-1.10.2.js"></script>
 <!--<script src="<?php echo base_url()?>asset/js/jquery-ui.js"></script>-->
-<script src="<?php echo base_url()?>asset/js/JsonMovimientosSalidas.js"></script>
+<script src="<?php echo base_url()?>asset/js/JsonMovimientosEntradas.js"></script>
 
 <div class"cintainer">
 <div id="mensaje"></div> 
