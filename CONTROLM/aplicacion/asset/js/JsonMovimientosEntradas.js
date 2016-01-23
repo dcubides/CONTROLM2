@@ -91,7 +91,7 @@ $(document).ready(function(){
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
             Elemento.Unidad = $('#unidad').val();
-            Elemento.Cantidad = $('#cantidad').val();
+            Elemento.Cantidad = $('#cantidad_legalizada').val();
             Elemento.Valor = $('#valor').val();
             Elemento.IdSession = $('#idsession').val();
             
@@ -101,7 +101,7 @@ $(document).ready(function(){
                 MiCarrito: DatosJson
             },
             function(data, textStatus) {
-                $("#carritoSalidas tbody").html("");
+                $("#carritoEntradas tbody").html("");
                 var idses= $('#idsession').val();
                 var Subtotal = 0;
                 var total    = 0;
@@ -142,7 +142,7 @@ $(document).ready(function(){
                             + ')"' 
                             +" src='../../img/delete.png' width='20' title='Eliminar'/></div></td>"
                             +"</tr>";
-                            $(nuevaFila).appendTo("#carritoSalidas tbody");
+                            $(nuevaFila).appendTo("#carritoEntradas tbody");
                             
                             $('#lbltcantidad').text(tCantidad);
                             $("#lbltvalor").text("$ " + Subtotal);
@@ -160,17 +160,17 @@ $(document).ready(function(){
     });
     
     $('#salvar-detalle').click(function(){
-            $.prompt("¿Desea guardar el detalle de esta salida?", {
-                title: "Control de inventarios. Salida de bodega",
+            $.prompt("¿Desea guardar el detalle de esta Entrada?", {
+                title: "Control de inventarios. Entrada",
                 buttons: { "Si, guardar cambios": true, "No, cerrar esta ventana": false },
                 submit: function(e,v,m,f){
                     if(v==true){
-                        var Salida = new Object();
+                        var Entrada = new Object();
                         
-                        Salida.id = $('#idSalidas').val();
-                        Salida.estado = 'Terminada';
-                        Salida.IdSession = $('#idsession').val();
-                        Salida.usuario = '';
+                        Entrada.id = $('#idEntradas').val();
+                        Entrada.estado = 'Terminada';
+                        Entrada.IdSession = $('#idsession').val();
+                        Entrada.usuario = '';
                         
                         var DatosJson = JSON.stringify(Salida);
                         $.post(currentLocation + '/sacar',

@@ -56,18 +56,21 @@ if($this->session->userdata('conectado') == true){ ?>
                       <br>
 
 
-                     <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
+                     <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>
                        <tr>
-                       <th style="text-align: center;">Elemento: <input class="span2" type="text" name="elemento" id="elemento"/></th>
+                       <th style="text-align: center;">Elemento: <input class="span2" type="text" name="elemento" id="elemento" required=""/>
+                                                      <input class="span2" type="hidden" name="codigo" id="codigo"/>
+                                                      <input class="span2" type="hidden" name="descripcion" id="descripcion"/>
+                                                      <input type="hidden" name="idsession"  id="idsession" value="<?php echo md5(rand(1000,50000)); ?>" /></td></th>
                         <th style="text-align: center;">Unidad: <input class="span2" type="text" name="unidad" id="unidad"/></th>
-                       <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
+                       <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="number" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
                        <th style="text-align: center;">Tipo: <select class="span2"><option>Legalización</option><option>Compra</option><option>Requisición</option></select></th>
                        </tr><br>
                        <tr>
                        <th style="text-align: center;">Cantidad Asignada: <input class="span2" type="text" name="cantidad_asignada" id="cantidad_asignada"/></th>
-                       <th style="text-align: center;">Valor: <input class="span2" type="text" name="valor" id="valor" required=""/></th>
-                       <th style="text-align: center;">Ticket: <input class="span2" type="text" name="ticket" id="ticket" required=""/></th>
+                       <th style="text-align: center;">Valor: <div class="input-prepend input-append"><span class="add-on">$</span><input class="span2" type="number" step="any" name="valor" id="valor" required=""/><span class="add-on">.00</span></div></th>
+                       <th style="text-align: center;">Ticket: <input class="span2" type="number" name="ticket" id="ticket" required=""/></th>
                        <th style="text-align: center;"><center><input type="submit" class="btn btn-primary" name="btnAgregarElemento" id="btnAgregarElemento" value="Agregar Elemento" /></center></th>
                        </tr>
                        </thead>
@@ -78,7 +81,7 @@ if($this->session->userdata('conectado') == true){ ?>
 
 
 
-                      <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
+                      <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                         <thead>
                         <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">CANTIDAD</th><th style="text-align: center;">VALOR</th></tr></thead>
                         <tbody>
