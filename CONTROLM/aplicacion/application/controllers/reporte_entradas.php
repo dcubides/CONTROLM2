@@ -208,7 +208,7 @@ class Reporte_entradas extends CI_Controller{
                                 "pendiente"      => 0,
                                 "tipo"           => $tipo,
                                 "estado"         => $estado,
-                                "ticket"         => 0,
+                                "ticket"         => $value['ticket'],
                                 "catalogo"       => "Bodega",
                                 "valor"          => str_replace('.', '', $value['valor']),
                                 "observaciones"  => ''
