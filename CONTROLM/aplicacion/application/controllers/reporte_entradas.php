@@ -42,10 +42,10 @@ class Reporte_entradas extends CI_Controller{
         echo json_encode($datos);
     }
     
-    public function Salidas(){
+    public function Entradas(){
         $filtro = $this->input->get("term");
         // obtenemos el array de profesiones y lo preparamos para enviar
-        $datos = $this->salidas_model->obtenerSalidas($filtro);
+        $datos = $this->entradas_model->obtenerEntradas($filtro);
         
         // cargamos  la interfaz y le enviamos los datos
         echo json_encode($datos);
@@ -81,7 +81,6 @@ class Reporte_entradas extends CI_Controller{
                          "quien_entrega"      => $entrega,
                          "quien_recibe"       => $recibe,
                          "estado"             => $Entrada->estado,
-                         //"requisicion"        => $Entrada->requisicion,
                          "usuario"            => $this->session->userdata('idusuario')
         );
         
@@ -103,82 +102,139 @@ class Reporte_entradas extends CI_Controller{
             if(isset($carritoEntrada->Codigo)){
                 $txtCodigo = $carritoEntrada->Codigo;
                 $elemento = $carritoEntrada->Elemento;
+                $ticket = $carritoEntrada->Ticket;
                 $unidad  = $carritoEntrada->Unidad;
-                $cantidad = $carritoEntrada->Cantidad;
+                $asignado = $carritoEntrada->Asignado;
+                $legalizado = $carritoEntrada->Legalizado;
+                $pendiente = $asignado - $legalizado;
+                $tipo = $carritoEntrada->Tipo;
                 $Costo     = $carritoEntrada->Valor;
                 $donde     = -1;
                 
+                if($pendiente<0)
+                  $pendiente = 0;
+                
                 for($i=0;$i<=count($carrito_entrada)-1;$i ++){
-                    if($txtCodigo==$carrito_entrada[$i]['txtCodigo']){
+                    if($txtCodigo==$carrito_entrada[$i]['txtCodigo'] && $tipo==$carrito_entrada[$i]['tipo'] && $ticket==$carrito_entrada[$i]['ticket']){
                         $donde=$i;
                     }
                 }
                 
                 if($donde != -1){
-                    $cuanto=$carrito_entrada[$donde]['cantidad'] + $cantidad;
-                    $carrito_entrada[$donde]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cuanto,"valor"=>$Costo);
+                    $cuanto = $carrito_entrada[$donde]['legalizado'] + $legalizado;
+                    $pendiente = $asignado - $cuanto; 
+                    if($pendiente>=0){
+                        $carrito_entrada[$donde]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"ticket"=>$ticket,"unidad"=>$unidad,"asignado"=>$asignado,"legalizado"=>$cuanto,"pendiente"=>$pendiente,"tipo"=>$tipo,"valor"=>$Costo);
+                    }
                 }else{
-                    $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+                    $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"ticket"=>$ticket,"unidad"=>$unidad,"asignado"=>$asignado,"legalizado"=>$legalizado,"pendiente"=>$pendiente,"tipo"=>$tipo,"valor"=>$Costo);
                 }
             }
         }else{
             $txtCodigo = $carritoEntrada->Codigo;
             $elemento = $carritoEntrada->Elemento;
+            $ticket = $carritoEntrada->Ticket;
             $unidad  = $carritoEntrada->Unidad;
-            $cantidad = $carritoEntrada->Cantidad;
+            $asignado = $carritoEntrada->Asignado;
+            $legalizado = $carritoEntrada->Legalizado;
+            $pendiente = $asignado - $legalizado;
+            $tipo = $carritoEntrada->Tipo;
             $Costo     = $carritoEntrada->Valor;
             
-            $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+            if($pendiente<0)
+              $pendiente = 0;
+            
+            $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"ticket"=>$ticket,"unidad"=>$unidad,"asignado"=>$asignado,"legalizado"=>$legalizado,"pendiente"=>$pendiente,"tipo"=>$tipo,"valor"=>$Costo);
         }
         
         $_SESSION['CarritoEntrada'.$carritoEntrada->IdSession]=$carrito_entrada;
         echo json_encode($_SESSION['CarritoEntrada'.$carritoEntrada->IdSession]);
     }
     
-    public function sacar(){
+    public function entrar(){
         session_start();
         $fecha = date('Y-m-d');
         
-        $Salida = json_decode($this->input->post('MiSalida'));
-        $arrayResponse = array("id"=>$Salida->id,"Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
+        $Entrada = json_decode($this->input->post('MiEntrada'));
+        $arrayResponse = array("id"=>$Entrada->id,"Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
                 
-        $carritoSalida = $_SESSION["CarritoSalida".$Salida->IdSession];
+        $carritoEntrada = $_SESSION["CarritoEntrada".$Entrada->IdSession];
         
-        if($Salida->id!=0){
-            foreach ($carritoSalida as $key => $value) {
+        if($Entrada->id!=0){
+            foreach ($carritoEntrada as $key => $value) {
                 $elemento = $this->catalogo_model->obtenerid($value["txtCodigo"]);
                 $tipo = $this->catalogo_model->obtenertipo($elemento);
                 $estado = $this->catalogo_model->obtenerestado($elemento);
                 
-                $arrayDetalle = array(
-                         "id_movimiento"  => $Salida->id,
-                         "id_elemento"    => $elemento, 
-                         "cantidad"       => $value['cantidad'],
-                         "pendiente"      => 0,
-                         "tipo"           => $tipo,
-                         "estado"         => $estado,
-                         "ticket"         => 0,
-                         "catalogo"       => "Bodega",
-                         "valor"          => str_replace('.', '', $value['valor']),
-                         "observaciones"  => ''
-                         
-                );
+                $entrega = $_SESSION['quien_entrega'];
+                $detalle = $this->entradas_model->obtenerDetalleSalida($entrega, $elemento);
                 
-                $idDetalle = $this->salidas_model->guardarDetalle($arrayDetalle);
+                //$id => obtiene el id, del detalle, de la primera salida
+                $id = 0;
+                //$idL => concatena todas las requisiciones necesarias para legalizar un elemento
+                $idL = "";
+                //$pendientes => almacena la suma del pendiente de las salidas
+                $pendientes = 0;
                 
-                $arrayKardex = array(
-                         "fecha_movimiento"  => $fecha,
-                         "id_detalle_mov"    => 0, 
-                         "id_detalle"        => $idDetalle,
-                         "cantidad_anterior" => 0,
-                         "cantidad_actual"   => $value['cantidad']
-                         
-                );
-                
-                $this->kardex_model->guardarKardex($arrayKardex);
+                //Obtener la cantidad asignada
+                $legalizado = $value['legalizado'];
+                $pendiente = 0; 
+                foreach($detalle as $llave => $val){
+                    //Obtener la cantidad del pendiente
+                    $pendiente = $pendiente + $val['pendiente'];
+                    $idL .= $val['id'].',';
+                        
+                    if($legalizado>0 && $pendiente>0){
+                        if($legalizado>$pendiente){
+                            //si lo legalizado es mayor a lo pendiente se se siguen sumando los registros
+                            //se actualiza los pendientes
+                            
+                            if($value['tipo']!="Compra")
+                              $this->entradas_model->actualizarPendientes(0, $val['id']);
+                        }else{
+                            //si lo legalizado es menor o igual a lo pendiente
+                            $p = $pendiente - $legalizado;
+                            //actualiza los pendientes de las salidas
+                            if($value['tipo']!="Compra")
+                              $this->entradas_model->actualizarPendientes($p, $val['id']);
+                            else
+                              $value['pendiente'] = $value['legalizado'];
+                            //Se crea el detalle de la salida
+                            
+                            $arrayDetalle = array(
+                                "id_movimiento"  => $Entrada->id,
+                                "id_elemento"    => $elemento, 
+                                "cantidad"       => $value['legalizado'],
+                                "pendiente"      => 0,
+                                "tipo"           => $tipo,
+                                "estado"         => $estado,
+                                "ticket"         => 0,
+                                "catalogo"       => "Bodega",
+                                "valor"          => str_replace('.', '', $value['valor']),
+                                "observaciones"  => ''
+                            );
+                            
+                            $idDetalle = $this->entradas_model->guardarDetalle($arrayDetalle);
+                            
+                            $arrayKardex = array(
+                                "fecha_movimiento"  => $fecha,
+                                "id_detalle_mov"    => trim($idL, ','), 
+                                "id_detalle"        => $idDetalle,
+                                "cantidad_anterior" => $value['asignado'],
+                                "cantidad_actual"   => $value['pendiente']
+                            );
+                            
+                            $this->kardex_model->guardarKardex($arrayKardex);
+                            
+                            $pendiente = 0;
+                            $legalizado = 0;
+                            $idL = "";
+                        }
+                    }
+                }
             }
             
-            $arrayResponse = array("id"=>$Salida->id,"Msg"=>"<strong>Salida: ".$Salida->id."</strong>, La salida de repuestos se realizo Correctamente", "TipoMsg"=>"Sucefull");
+            $arrayResponse = array("id"=>$Entrada->id,"Msg"=>"<strong>Entrada: ".$Entrada->id."</strong>, La entrada de repuestos se realizo Correctamente", "TipoMsg"=>"Sucefull");
             echo json_encode($arrayResponse);
         }
     }

@@ -62,7 +62,7 @@ if($this->session->userdata('conectado') == true){ ?>
                                                       <input type="hidden" name="idsession"  id="idsession" value="<?php echo md5(rand(1000,50000)); ?>" /></td>
                         <th style="text-align: center;">Unidad: <input class="span2" type="text" name="unidad" id="unidad" readonly=""/></th>
                        <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
-                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización</option><option>Compra</option><option>Requisición</option></select></th>
+                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización</option><option>Compra</option></select></th>
                        </tr><br>
                        <tr>
                        <th style="text-align: center;">Cantidad Asignada: <input class="span2" type="text" name="cantidad_asignada" id="cantidad_asignada" readonly=""/></th>
@@ -80,34 +80,34 @@ if($this->session->userdata('conectado') == true){ ?>
 
                       <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                         <thead>
-                        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">ASIGNADO</th><th style="text-align: center;">LEGALIZADO</th><th style="text-align: center;">PENDIENTE</th><th style="text-align: center;">TIPO</th><th style="text-align: center;">VALOR</th><th></th></tr></thead>
+                        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">TICKET</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">ASIGNADO</th><th style="text-align: center;">LEGALIZADO</th><th style="text-align: center;">PENDIENTE</th><th style="text-align: center;">TIPO</th><th style="text-align: center;">VALOR</th><th style="text-align: center;">TOTAL</th><th></th></tr></thead>
                         <tbody>
                       <tr>
-                      <td colspan=9><center>No Hay Productos Agregados</center></td>
+                      <td colspan=11><center>No Hay Productos Agregados</center></td>
                       </tr>
         
                       </tbody>
                        <tfoot>
           <tr>
-            <th colspan="4"></th>
+            <th colspan="5"></th>
             <th style="text-align: center;">Total Cantidad Legalizado</th>
-            <th></th>
+            <th colspan="2"></th>
             <th colspan="2" style="text-align: center;">Total</th>
             <th></th>
           </tr>
           <tr>
-            <td colspan="4">&nbsp;</td>
+            <td colspan="5">&nbsp;</td>
             <td style="text-align: center;"><label id="lbltcantidad"></label></td>
-            <td></td>
+            <td colspan="2"></td>
             <td colspan="2" style="text-align: center;"><label id="lbltotal"></label></td>
           </tr>
         </tfoot>
                       </table>
 
                        <center>
-                  <button type="button" class="btn" id="clear-entrada"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp;
-                  <button type="reset" id="cancelar-movimiento" class="btn btn-default" onclick="javascript:location.reload();"><span class="icon-retweet"></span> Cancelar Salida</button> &nbsp;
-                 <button type="button" id="salvar-detalle" class="btn btn-primary"><span class="icon-save"></span> Confirmar Salida</button></center>
+                  <button type="reset" class="btn" id="clear-entrada" onclick="javascript:location.reload();"><span class="icon-repeat"></span> Nueva Entrada</button> &nbsp;
+                  <button type="button" id="cancelar-movimiento" class="btn"><span class="icon-retweet"></span> Cancelar Salida</button> &nbsp;
+                 <button type="button" id="salvar-detalle" class="btn btn-primary"><span class="icon-save"></span> Confirmar Entrada</button></center>
                 </form>
           <br/><hr/><br/>
        

@@ -10,19 +10,23 @@ $(function(){
     $('#ticket').autocomplete({
         source: currentLocation + "/Tickets"
     });
-    /*$('#idEntradas').autocomplete({
-        source: currentLocation + "/Salidas"
-    });*/
+    $('#idEntradas').autocomplete({
+        source: currentLocation + "/Entradas"
+    });
     $('#elemento').autocomplete({
         source: currentLocation + "/Elementos",
         select: function(event, ui){
             $('#codigo').val(ui.item.CODIGO);
             $('#descripcion').val(ui.item.DESCRIPCION);
-            $('#cantidad_asignada').val(ui.item.cantidad);
+            if($('#tipo').val()=="Legalización")
+              $('#cantidad_asignada').val(ui.item.cantidad);
             $('#unidad').val(ui.item.UNIDAD);
-            $('#valor').val(ui.item.valor);
+            $('#valor').val(ui.item.VALOR);
             cantidadAsignada = ui.item.cantidad;
         }
+    });
+    $('#ticket').autocomplete({
+        source: currentLocation + "/Tickets"
     });
 });
 
@@ -66,7 +70,6 @@ $(document).ready(function(){
     });
     //----------------------------------------------------------------//
     
-    
     $("#formulario").submit(function(e){
         return false;
     });
@@ -83,17 +86,16 @@ $(document).ready(function(){
                 buttons: { "Si, crear entrada": true, "No, cerrar esta ventana": false },
                 submit: function(e,v,m,f){
                     if(v==true){
-                        var Salida = new Object();
+                        var Entrada = new Object();
                         
-                        Salida.fecha_movimiento = '';
-                        Salida.tipo = 'Entrada';
-                        Salida.quien_entrega = $('#quien_entrega').val();
-                        Salida.quien_recibe = $('#quien_recibe').val();
-                        Salida.estado = 'Terminado';
-                        //Salida.requisicion = $('#ticket').val();
-                        Salida.usuario = '';
+                        Entrada.fecha_movimiento = '';
+                        Entrada.tipo = 'Entrada';
+                        Entrada.quien_entrega = $('#quien_entrega').val();
+                        Entrada.quien_recibe = $('#quien_recibe').val();
+                        Entrada.estado = 'Terminado';
+                        Entrada.usuario = '';
                         
-                        var DatosJson = JSON.stringify(Salida);
+                        var DatosJson = JSON.stringify(Entrada);
                         $.post(currentLocation + '/nuevaEntrada',
                         {
                             MiEntrada: DatosJson
@@ -119,10 +121,10 @@ $(document).ready(function(){
                         );
                     }
                     $.prompt.close();
-                    $('#salvar-entrada').unbind('click');
                 }
             });
         });
+        $('#salvar-entrada').unbind('click');
     });
     
     $('#btnAgregarElemento').click(function(){
@@ -131,8 +133,12 @@ $(document).ready(function(){
             
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
+            Elemento.Ticket = $('#ticket').val();
             Elemento.Unidad = $('#unidad').val();
-            Elemento.Cantidad = $('#cantidad_legalizada').val();
+            Elemento.Asignado = $('#cantidad_asignada').val();
+            Elemento.Legalizado = $('#cantidad_legalizada').val();
+            Elemento.Pendiente = 0;
+            Elemento.Tipo = $('#tipo').val();
             Elemento.Valor = $('#valor').val();
             Elemento.IdSession = $('#idsession').val();
             
@@ -149,12 +155,13 @@ $(document).ready(function(){
                 var tCantidad = 0;
                 
                 $.each(data, function(i, item) {
-                    var cantsincero = item.cantidad;
+                    var cantsincero = item.legalizado;
                     cantsincero = parseInt(cantsincero);
                     if(cantsincero!=0){
                         tCantidad = tCantidad + cantsincero;
+                        total = total.toString().replace(/\./g,'');
                         
-                        var Operacion= parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.cantidad);
+                        var Operacion= parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.legalizado);
                         Subtotal = parseFloat(Subtotal) + parseFloat(item.valor.replace(/\./g,''));
                         total    = parseFloat(total) + parseFloat(Operacion);
                         
@@ -164,12 +171,19 @@ $(document).ready(function(){
                         total = total.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
                         total = total.split('').reverse().join('').replace(/^[\.]/,'');
                         
+                        Operacion = Operacion.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+                        Operacion = Operacion.split('').reverse().join('').replace(/^[\.]/,'');
+                        
                         var nuevaFila =
                             "<tr>"
                             +"<td>" + item.txtCodigo + "</td>"
                             +"<td>" + item.elemento + "</td>"
+                            +"<td>" + item.ticket + "</td>"
                             +"<td>" + item.unidad + "</td>"
-                            +"<td>" + item.cantidad + "</td>"
+                            +"<td>" + item.asignado + "</td>"
+                            +"<td>" + item.legalizado + "</td>"
+                            +"<td>" + item.pendiente + "</td>"
+                            +"<td>" + item.tipo + "</td>"
                             +"<td>$ " + item.valor + "</td>"
                             +"<td>$ " + Operacion + "</td>"
                             +"<td><div align='center'>"
@@ -195,26 +209,25 @@ $(document).ready(function(){
             },
             "json"
             );
-            
-            $('#btnAgregarElemento').unbind('click');
         });
+        $('#btnAgregarElemento').unbind('click');
     });
     
     $('#salvar-detalle').click(function(){
-            $.prompt("¿Desea guardar el detalle de esta salida?", {
-                title: "Control de inventarios. Salida de bodega",
+            $.prompt("¿Desea guardar el detalle de esta entrada?", {
+                title: "Control de inventarios. Entrada de bodega",
                 buttons: { "Si, guardar cambios": true, "No, cerrar esta ventana": false },
                 submit: function(e,v,m,f){
                     if(v==true){
-                        var Salida = new Object();
+                        var Entrada = new Object();
                         
-                        Salida.id = $('#idSalidas').val();
-                        Salida.estado = 'Pendiente';
-                        Salida.IdSession = $('#idsession').val();
-                        Salida.usuario = '';
+                        Entrada.id = $('#idEntradas').val();
+                        Entrada.estado = 'Terminado';
+                        Entrada.IdSession = $('#idsession').val();
+                        Entrada.usuario = '';
                         
-                        var DatosJson = JSON.stringify(Salida);
-                        $.post(currentLocation + '/sacar',
+                        var DatosJson = JSON.stringify(Entrada);
+                        $.post(currentLocation + '/entrar',
                         {
                             MiEntrada: DatosJson
                         },
@@ -223,7 +236,7 @@ $(document).ready(function(){
                             if(data.TipoMsg=="Error"){
                                 $("#mensaje").html("<div class='alert alert-danger text-center' alert-dismissable><button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
                             }else{
-                                $('#idSalidas').val(data.id);
+                                $('#idEntradas').val(data.id);
                                 $("#mensaje").html("<div class='alert alert-success text-center' alert-dismissable> <button type='button' class='close' data-dismiss='alert'>&times;</button>"+data.Msg+"</div>");
                                 
                                 $('#formulario').find('input, textarea, select, button').attr('disabled', 'disabled');
@@ -232,6 +245,7 @@ $(document).ready(function(){
                                 $('#salvar-detalle').attr('disabled', 'disabled');
                                 $('#cancelar-movimiento').attr('disabled', 'disabled');
                             }
+                            
                             $(window).scrollTop($('#mensaje').offset().top);
                         },
                         "json"
@@ -240,7 +254,7 @@ $(document).ready(function(){
                     $.prompt.close();
                 }
             });
-    })
+    });
 });
 
 function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
@@ -268,14 +282,14 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
         var contador = 0;
         //Recibimos parametro y imprimimos
         $.each(data, function(i, item) {
-            var cantsincero = item.cantidad;
+            var cantsincero = item.Legalizado;
             cantsincero = parseInt(cantsincero);
             
             if(cantsincero!=0){
                 tCantidad = tCantidad + cantsincero;
                 
                 contador   = contador + 1;
-                var Operacion = parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.cantidad);
+                var Operacion = parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.Legalizado);
                 Subtotal = parseFloat(Subtotal) + parseFloat(item.valor.replace(/\./g,''));
                 total    = parseFloat(total) + parseFloat(Operacion);
                 
@@ -290,7 +304,7 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
                             +"<td>"+item.txtCodigo+"</td>"
                             +"<td>"+item.elemento+"</td>"
                             +"<td>"+item.unidad+"</td>"
-                            +"<td>"+item.cantidad+"</td>"
+                            +"<td>"+item.Legalizado+"</td>"
                             +"<td>$ "+item.valor+"</td>"
                             +"<td>$ "+Operacion+"</td>"
                             +"<td><div align='center'>"
@@ -331,16 +345,11 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
 function LimpiarTexto(){
     $('#elemento').val("");
     $('#unidad').val("");
-    $('#cantidad').val("");
-    $('#valor').val("");
-    
-    $("#elemento").focus();
-}
-function LimpiarTexto(){
-    $('#elemento').val("");
-    $('#unidad').val("");
-    $('#cantidad').val("");
-    $('#valor').val("");
+    $('#cantidad_legalizada').val("");
+    $('#tipo').val("Legalización");
+    $('#cantidad_asignada').val(0);
+    $('#valor').val(0);
+    $('#ticket').val(0);
     
     $("#elemento").focus();
 }

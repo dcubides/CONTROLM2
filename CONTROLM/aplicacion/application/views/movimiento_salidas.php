@@ -87,8 +87,8 @@ if($this->session->userdata('conectado') == true){ ?>
       </table>
       
       <center>
-      <button type="button" class="btn" id="clear-salida"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp;
-      <button type="reset" id="cancelar-movimiento" class="btn btn-default" onclick="javascript:location.reload();"><span class="icon-retweet"></span> Cancelar Salida</button> &nbsp;
+      <button type="reset" class="btn" id="clear-salida" onclick="javascript:location.reload();"><span class="icon-repeat"></span> Nueva Salida</button> &nbsp;
+      <button type="button" id="cancelar-movimiento" class="btn btn-default"><span class="icon-retweet"></span> Cancelar Salida</button> &nbsp;
       <button type="button" id="salvar-detalle" class="btn btn-primary"><span class="icon-save"></span> Confirmar Salida</button></center>
     </form>
     

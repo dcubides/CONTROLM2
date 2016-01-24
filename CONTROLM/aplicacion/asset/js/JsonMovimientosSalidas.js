@@ -96,10 +96,10 @@ $(document).ready(function(){
                         );
                     }
                     $.prompt.close();
-                    $('#salvar-salida').unbind('click');
                 }
             });
         });
+        $('#salvar-salida').unbind('click');
     });
     
     $('#btnAgregarElemento').click(function(){
@@ -175,9 +175,8 @@ $(document).ready(function(){
             },
             "json"
             );
-            
-            $('#btnAgregarElemento').unbind('click');
         });
+        $('#btnAgregarElemento').unbind('click');
     });
     
     $('#salvar-detalle').click(function(){
@@ -220,7 +219,7 @@ $(document).ready(function(){
                     $.prompt.close();
                 }
             });
-    })
+    });
 });
 
 function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){

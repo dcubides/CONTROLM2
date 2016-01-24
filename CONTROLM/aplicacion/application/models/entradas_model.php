@@ -29,8 +29,8 @@ class Entradas_model extends CI_Model {
     
     public function buscartickets($filtro){
         //armamos la consulta
-       $query = $this->db->query('SELECT id as label FROM nesitelco.ticket WHERE ESTADO="ABIERTO" AND id like "%'.$filtro.'%"');
-       return $query->result();
+        $query = $this->db->query('SELECT id as label FROM nesitelco.ticket WHERE ESTADO="ABIERTO" AND id like "%'.$filtro.'%"');
+        return $query->result();
     }
     
     public function obternerCedulas($nombre){
@@ -42,13 +42,13 @@ class Entradas_model extends CI_Model {
         return $cedula;
     }
     
-    public function obtenerSalidas($filtro){
-        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%" order by id desc');
+    public function obtenerEntradas($filtro){
+        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%" and tipo="Entrada" order by id desc');
         return $query->result();
     }
     
     public function obtenerElementos($tecnico, $filtro){
-        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, detalle_movimiento.cantidad, UNIDAD, replace(format(detalle_movimiento.valor, 0), ",", ".") as VALOR
+        $query = $this->db->query('select distinct concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, sum(detalle_movimiento.pendiente) as cantidad, UNIDAD, replace(format(detalle_movimiento.valor, 0), ",", ".") as VALOR
         FROM nesitelco.CATALOGO_BODEGA
         inner join controlm.detalle_movimiento
         on detalle_movimiento.id_elemento=CATALOGO_BODEGA.id
@@ -72,7 +72,26 @@ class Entradas_model extends CI_Model {
      	$this->db->insert('detalle_movimiento', $arrayDetalleSalida);
         $ids = $this->db->insert_id();
      	$this->db->trans_complete();
+        
      	return $ids;
+    }
+    
+    public function obtenerDetalleSalida($tecnico, $idElemento){
+        //armamos la consulta
+        $query = $this->db->query('select detalle_movimiento.id, pendiente
+        from controlm.detalle_movimiento
+        inner join movimientos
+        on detalle_movimiento.id_movimiento=movimientos.id
+        where pendiente>0
+        and id_elemento="'.$idElemento.'"
+        and movimientos.quien_recibe="'.$tecnico.'"
+        order by id asc');
+        
+        return $query->result_array();
+    }
+    
+    public function actualizarPendientes($pendiente, $id){
+        $this->db->query('update detalle_movimiento set pendiente="'.$pendiente.'" where id='.$id);
     }
 }
 ?>

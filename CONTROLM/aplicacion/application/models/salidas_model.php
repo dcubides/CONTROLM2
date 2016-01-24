@@ -34,7 +34,7 @@ class Salidas_model extends CI_Model {
     }
     
     public function obtenerSalidas($filtro){
-        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%" order by id desc');
+        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%" and tipo="Salida" order by id desc');
         return $query->result();
     }
     
