@@ -51,6 +51,10 @@ class Salidas_model extends CI_Model {
      	return $ids;
     }
     
+    public function actualizarEstadoMov($estado, $id){
+        $this->db->query('update movimientos set estado="'.$estado.'" where id='.$id);
+    }
+    
     public function guardarDetalle($arrayDetalleSalida){
         $this->db->trans_start();
      	$this->db->insert('detalle_movimiento', $arrayDetalleSalida);

@@ -75,15 +75,13 @@ if($this->session->userdata('conectado') == true){ ?>
           <tr>
             <th colspan="3"></th>
             <th style="text-align: center;">Total Cantidades</th>
-            <th style="text-align: center;">Subtotal</th>
-            <th style="text-align: center;">Total</th>
+            <th colspan="2" style="text-align: center;">Total</th>
             <th></th>
           </tr>
           <tr>
             <td colspan="3">&nbsp;</td>
             <td style="text-align: center;"><label id="lbltcantidad"></label></td>
-            <td style="text-align: center;"><label id="lbltvalor"></label></td>
-            <td style="text-align: center;"><label id="lbltotal"></label></td>
+            <td colspan="2" style="text-align: center;"><label id="lbltotal"></label></td>
           </tr>
         </tfoot>
       </table>

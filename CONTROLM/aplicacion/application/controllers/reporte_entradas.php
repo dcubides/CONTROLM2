@@ -15,8 +15,6 @@ class Reporte_entradas extends CI_Controller{
 		$this->load->view('plantillas/front_end/footer');
 	}
 
-
-
 	 public function EncargadoBodega(){
 	   // obtenemos el array de profesiones y lo preparamos para enviar
        $filtro = $this->input->get("term");
@@ -54,9 +52,12 @@ class Reporte_entradas extends CI_Controller{
     }
     
     public function Elementos(){
+        session_start();
+        
+        $entrega = $_SESSION['quien_entrega'];
         $filtro = $this->input->get("term");
         // obtenemos el array de profesiones y lo preparamos para enviar
-        $datos = $this->salidas_model->obtenerElementos($filtro);
+        $datos = $this->entradas_model->obtenerElementos($entrega, $filtro);
         
         // cargamos  la interfaz y le enviamos los datos
         echo json_encode($datos);
@@ -69,8 +70,10 @@ class Reporte_entradas extends CI_Controller{
         $Entrada = json_decode($this->input->post('MiEntrada'));        
         $arrayResponse = array("id"=>"0","Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
         
-        $entrega = $this->entradas_model->obternerCedulas($Entrada->quien_recibe);
-        $recibe = $this->entradas_model->obternerCedulas($Entrada->quien_entrega);
+        $entrega = $this->entradas_model->obternerCedulas($Entrada->quien_entrega);
+        $recibe = $this->entradas_model->obternerCedulas($Entrada->quien_recibe);
+        
+        $_SESSION['quien_entrega'] = $entrega;
         
         $arrayEntrada = array(
                          "fecha_movimiento"   => date('Y-m-d H:i:s'),
@@ -93,43 +96,43 @@ class Reporte_entradas extends CI_Controller{
     public function agregarCarrito(){
         session_start();
         
-        $carritoSalida = json_decode($this->input->post('MiCarrito'));
-        if(isset($_SESSION['CarritoSalida'.$carritoSalida->IdSession])){
-            $carrito_salida=$_SESSION['CarritoSalida'.$carritoSalida->IdSession];
+        $carritoEntrada = json_decode($this->input->post('MiCarrito'));
+        if(isset($_SESSION['CarritoEntrada'.$carritoEntrada->IdSession])){
+            $carrito_entrada=$_SESSION['CarritoEntrada'.$carritoEntrada->IdSession];
             
-            if(isset($carritoSalida->Codigo)){
-                $txtCodigo = $carritoSalida->Codigo;
-                $elemento = $carritoSalida->Elemento;
-                $unidad  = $carritoSalida->Unidad;
-                $cantidad = $carritoSalida->Cantidad;
-                $Costo     = $carritoSalida->Valor;
+            if(isset($carritoEntrada->Codigo)){
+                $txtCodigo = $carritoEntrada->Codigo;
+                $elemento = $carritoEntrada->Elemento;
+                $unidad  = $carritoEntrada->Unidad;
+                $cantidad = $carritoEntrada->Cantidad;
+                $Costo     = $carritoEntrada->Valor;
                 $donde     = -1;
                 
-                for($i=0;$i<=count($carrito_salida)-1;$i ++){
-                    if($txtCodigo==$carrito_salida[$i]['txtCodigo']){
+                for($i=0;$i<=count($carrito_entrada)-1;$i ++){
+                    if($txtCodigo==$carrito_entrada[$i]['txtCodigo']){
                         $donde=$i;
                     }
                 }
                 
                 if($donde != -1){
-                    $cuanto=$carrito_salida[$donde]['cantidad'] + $cantidad;
-                    $carrito_salida[$donde]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cuanto,"valor"=>$Costo);
+                    $cuanto=$carrito_entrada[$donde]['cantidad'] + $cantidad;
+                    $carrito_entrada[$donde]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cuanto,"valor"=>$Costo);
                 }else{
-                    $carrito_salida[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+                    $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
                 }
             }
         }else{
-            $txtCodigo = $carritoSalida->Codigo;
-            $elemento = $carritoSalida->Elemento;
-            $unidad  = $carritoSalida->Unidad;
-            $cantidad = $carritoSalida->Cantidad;
-            $Costo     = $carritoSalida->Valor;
+            $txtCodigo = $carritoEntrada->Codigo;
+            $elemento = $carritoEntrada->Elemento;
+            $unidad  = $carritoEntrada->Unidad;
+            $cantidad = $carritoEntrada->Cantidad;
+            $Costo     = $carritoEntrada->Valor;
             
-            $carrito_salida[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+            $carrito_entrada[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
         }
         
-        $_SESSION['CarritoSalida'.$carritoSalida->IdSession]=$carrito_salida;
-        echo json_encode($_SESSION['CarritoSalida'.$carritoSalida->IdSession]);
+        $_SESSION['CarritoEntrada'.$carritoEntrada->IdSession]=$carrito_entrada;
+        echo json_encode($_SESSION['CarritoEntrada'.$carritoEntrada->IdSession]);
     }
     
     public function sacar(){
