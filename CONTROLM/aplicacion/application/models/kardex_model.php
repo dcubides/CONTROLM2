@@ -21,6 +21,7 @@ class Kardex_model extends CI_Model {
         inner join controlm.detalle_movimiento
         on movimientos.id=detalle_movimiento.id_movimiento
         where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%"
+        and movimientos.tipo="Salida"
         and CEDULA>0
         and DIRECTORIO.ESTADO="ALTA"
         ORDER BY concat(NOMBRE, " ", APELLIDOS) ASC');
@@ -48,6 +49,26 @@ class Kardex_model extends CI_Model {
         and dm.pendiente>0
         and m.quien_recibe="'.$tecnico.'"
         group by CODIGO');
+        return $query->result_array();
+    }
+    
+    public function Kardex($filtros){
+        $query = $this->db->query('select m.id as Movimiento, m.fecha_movimiento,
+        (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega) as Entrega,
+        (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe) as Recibe,
+        concat(c.CODIGO, " ", c.DESCRIPCION) as Elemento,
+        m.tipo as "Tipo Movimiento", if(m.tipo="Salida", m.requisicion, "") as Requisicion, if(m.tipo="Entrada", dm.ticket, "") as Ticket,
+        if(m.tipo="Salida", dm.cantidad, "") as Entregado, if(m.tipo="Entrada", dm.cantidad, "") as Legalizado, dm.pendiente,
+        format(dm.VALOR, 0) as "Valor Unitario", format((dm.pendiente * dm.VALOR), 0) as "Total" 
+        from controlm.movimientos m
+        inner join nesitelco.DIRECTORIO d
+        on m.quien_recibe=d.CEDULA
+        inner join detalle_movimiento dm
+        on m.id=dm.id_movimiento
+        inner join nesitelco.CATALOGO_BODEGA c
+        on dm.id_elemento=c.id
+        '.$filtros.'
+        order by dm.id desc');
         return $query->result_array();
     }
 }
