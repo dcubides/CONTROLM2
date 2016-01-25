@@ -73,7 +73,7 @@ if($this->session->userdata('conectado') == true){ ?>
         <li class="active"><a href="<?php echo site_url('reporte_salidas')?>"><i class="icon-dashboard"></i><span>Reporte de Salida </span> </a> </li>
          <li class="active"><a href="<?php echo site_url('reporte_entradas')?>"><i class="icon-dashboard"></i><span>Reportes de Devoluciones</span> </a> </li>
         <li class="active"><a href='<?php echo site_url('reportes_movimientos')?>'><i class="icon-list-alt"></i><span>Informes Movimientos</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('salidas_bodega')?>'><i class="icon-facetime-video"></i><span>Informes de Saldos</span> </a></li>
+        <li class="active"><a href='<?php echo site_url('reporte_saldos')?>'><i class="icon-facetime-video"></i><span>Informes de Saldos</span> </a></li>
         <li class="active"><a href="<?php echo base_url();?>index.php/home/salir"><i class="icon-bar-chart"></i><span>Salir</span> </a> </li>
        
        
