@@ -71,5 +71,26 @@ class Kardex_model extends CI_Model {
         order by dm.id desc');
         return $query->result_array();
     }
+
+
+    public function movimiento($filtro){
+        $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%"  order by id desc');
+        return $query->result();
+    }
+
+    public function obtenerticket($filtro){
+        $query = $this->db->query('select ticket as label FROM controlm.detalle_movimiento where id like "%'.$filtro.'%"  order by id desc');
+        return $query->result();
+    }
+
+     public function obtenerElementos($filtro){
+        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, UNIDAD, replace(format(VALOR, 0), ",", ".") as VALOR FROM nesitelco.CATALOGO_BODEGA where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" order by id desc');
+        return $query->result();
+    }
+
+    public function obtenerFecha($filtro){
+        $query = $this->db->query('select fecha_movimiento as label FROM controlm.movimientos where id like "%'.$filtro.'%"  order by id desc');
+        return $query->result();
+    }
 }
 ?>

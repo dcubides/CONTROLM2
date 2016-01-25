@@ -39,7 +39,7 @@ if($this->session->userdata('conectado') == true){ ?>
       </thead>
       <tbody>
         <tr>
-          <td colspan="6"><center>No Hay Productos Agregados</center></td>
+          <td colspan="6"><center>No ha seleccionado tecnio</center></td>
         </tr>
       </tbody>
     </table>
