@@ -30,33 +30,39 @@ $(document).ready(function(){
     
     $('#consultar').click(function(){
         $("form#formulario").submit(function(){
-            var Tecnico = new Object();
+            var Consulta = new Object();
             
-            Tecnico.nombre = $('#tecnico').val();
+            Consulta.movimiento = $('#idmovimiento').val();
+            Consulta.tipo = $('#tipo').val();
+            Consulta.ticket = $('#ticket').val();
+            Consulta.requisicion = $('#requisicion').val();
+            Consulta.elemento = $('#elemento').val();
+            Consulta.fecha = $('#fecha').val();
+            Consulta.nombre = $('#tecnico').val();
             
-            var DatosJson = JSON.stringify(Tecnico);
+            var DatosJson = JSON.stringify(Consulta);
             $.post(currentLocation + '/InformeKardex',
             {
-                MiTecnico: DatosJson
+                MiConsulta: DatosJson
             },
             function(data, textStatus) {
                 $("#carritoInforme tbody").html("");
                 $.each(data, function(i, item) {
                     var nuevaFila =
                              "<tr>" 
-                             +"<td>" + item.MOVIMIENTO + "</td>"
-                             +"<td>" + item.FECHA_MOVIMIENTO + "</td>"
-                             +"<td>" + item.ENTREGA + "</td>"
-                             +"<td>" + item.RECIBE + "</td>"
-                             +"<td>" + item.ELEMENTO + "</td>"
-                             +"<td>" + item.TIPO_MOVIMIENTO + "</td>"
-                             +"<td>" + item.REQUISICION + "</td>"
-                             +"<td>" + item.TICKET + "</td>"
-                             +"<td>" + item.ENTREGADO + "</td>"
-                             +"<td>" + item.LEGALIZADO + "</td>"
-                             +"<td>" + item.PENDIENTE + "</td>"
-                             +"<td>" + item.VALOR_UNITARIO + "</td>"
-                             +"<td>" + item.TOTAL + "</td>"
+                             +"<td>" + item.Movimiento + "</td>"
+                             +"<td>" + item.fecha_movimiento + "</td>"
+                             +"<td>" + item.Entrega + "</td>"
+                             +"<td>" + item.Recibe + "</td>"
+                             +"<td>" + item.Elemento + "</td>"
+                             +"<td>" + item.Tipo_Movimiento + "</td>"
+                             +"<td>" + item.Requisicion + "</td>"
+                             +"<td>" + item.Ticket + "</td>"
+                             +"<td>" + item.Entregado + "</td>"
+                             +"<td>" + item.Legalizado + "</td>"
+                             +"<td>" + item.pendiente + "</td>"
+                             +"<td>" + item.Valor_Unitario + "</td>"
+                             +"<td>" + item.Total + "</td>"
                              +"</tr>";
                     $(nuevaFila).appendTo("#carritoInforme tbody");
                 });
@@ -67,6 +73,7 @@ $(document).ready(function(){
     });
     
     $('#descargar').click(function(){
-        window.open(currentLocation + "/Exportar?nombre=" + $('#tecnico').val());
+        window.open(currentLocation + "/Exportar?movimiento=" + $('#idmovimiento').val() + "&tipo=" + $('#tipo').val() + "&ticket=" + $('#ticket').val() +
+        "&requisicion=" + $('#requisicion').val() + "&elemento=" + $('#elemento').val() + "&fecha=" + $('#fecha').val() + "&nombre=" + $('#tecnico').val());
     });
 });

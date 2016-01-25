@@ -190,8 +190,12 @@ $(document).ready(function(){
                             +'<img onclick="EliminarItem('
                             +"'" + item.txtCodigo + "',"
                             +"'" + item.elemento + "',"
+                            +"'" + item.ticket + "',"
                             +"'" + item.unidad + "',"
+                            +"'" + item.asignado + "',"
                             +"'-1',"
+                            +"'" + item.pendiente + "',"
+                            +"'" + item.tipo + "',"
                             +"'" + idses + "',"
                             +"'" + item.valor + "'"
                             + ')"' 
@@ -257,15 +261,19 @@ $(document).ready(function(){
     });
 });
 
-function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
+function EliminarItem(codigo, descripcion, ticket, unidad, asignado, legalizado, pendiete, tipo, idsession, valor){
     var Elemento = new Object();
     
     Elemento.Codigo = codigo;
     Elemento.Elemento = descripcion;
+    Elemento.Ticket = ticket;
     Elemento.Unidad = unidad;
-    Elemento.Cantidad = cantidad;
-    Elemento.IdSession = idsession;
+    Elemento.Asignado = asignado;
+    Elemento.Legalizado = legalizado;
+    Elemento.Pendiente = pendiete;
+    Elemento.Tipo = tipo;
     Elemento.Valor = valor;
+    Elemento.IdSession = idsession;
     
     var DatosJson = JSON.stringify(Elemento);
     $.post(currentLocation + '/agregarCarrito',
@@ -273,7 +281,7 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
         MiCarrito: DatosJson
     },
     function(data, textStatus) {
-        $("#carritoSalidas tbody").html("");
+        $("#carritoEntradas tbody").html("");
         var idses= $('#idsession').val();
         var Subtotal = 0;
         var total    = 0;
@@ -282,14 +290,14 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
         var contador = 0;
         //Recibimos parametro y imprimimos
         $.each(data, function(i, item) {
-            var cantsincero = item.Legalizado;
+            var cantsincero = item.legalizado;
             cantsincero = parseInt(cantsincero);
             
             if(cantsincero!=0){
                 tCantidad = tCantidad + cantsincero;
                 
                 contador   = contador + 1;
-                var Operacion = parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.Legalizado);
+                var Operacion = parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.legalizado);
                 Subtotal = parseFloat(Subtotal) + parseFloat(item.valor.replace(/\./g,''));
                 total    = parseFloat(total) + parseFloat(Operacion);
                 
@@ -301,38 +309,45 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
                 
                 var nuevaFila =
                             "<tr>"
-                            +"<td>"+item.txtCodigo+"</td>"
-                            +"<td>"+item.elemento+"</td>"
-                            +"<td>"+item.unidad+"</td>"
-                            +"<td>"+item.Legalizado+"</td>"
-                            +"<td>$ "+item.valor+"</td>"
-                            +"<td>$ "+Operacion+"</td>"
+                            +"<td>" + item.txtCodigo + "</td>"
+                            +"<td>" + item.elemento + "</td>"
+                            +"<td>" + item.ticket + "</td>"
+                            +"<td>" + item.unidad + "</td>"
+                            +"<td>" + item.asignado + "</td>"
+                            +"<td>" + item.legalizado + "</td>"
+                            +"<td>" + item.pendiente + "</td>"
+                            +"<td>" + item.tipo + "</td>"
+                            +"<td>$ " + item.valor + "</td>"
+                            +"<td>$ " + Operacion + "</td>"
                             +"<td><div align='center'>"
                             +'<img onclick="EliminarItem('
-                            +"'"+item.txtCodigo+"',"
-                            +"'"+item.elemento+"',"
-                            +"'"+item.unidad+"',"
+                            +"'" + item.txtCodigo + "',"
+                            +"'" + item.elemento + "',"
+                            +"'" + item.ticket + "',"
+                            +"'" + item.unidad + "',"
+                            +"'" + item.asignado + "',"
                             +"'-1',"
-                            +"'"+idses+"',"
-                            +"'"+item.valor+"'"
+                            +"'" + item.pendiente + "',"
+                            +"'" + item.tipo + "',"
+                            +"'" + idses + "',"
+                            +"'" + item.valor + "'"
                             + ')"' 
                             +" src='../../img/delete.png' width='20' title='Eliminar'/></div></td>"
                             +"</tr>";
-                            $(nuevaFila).appendTo("#carritoSalidas tbody");
+                            $(nuevaFila).appendTo("#carritoEntradas tbody");
                             
                             $('#lbltcantidad').text(tCantidad);
                             $("#lbltvalor").text("$ " + Subtotal);
                             $("#lbltotal").text("$ " + total);
-                }
-                            
+                    }            
             });
             if(contador==0){
-                $("#carritoSalidas tbody").html("");
+                $("#carritoEntradas tbody").html("");
                 var nuevaFila =
                 "<tr>"
-                +"<td colspan=7><center>No Hay Productos Agregados</center></td>"
+                +"<td colspan=11><center>No Hay Productos Agregados</center></td>"
                 +"</tr>";
-                $(nuevaFila).appendTo("#carritoSalidas tbody");
+                $(nuevaFila).appendTo("#carritoEntradas tbody");
                 $('#lbltcantidad').text("0");
                 $("#lbltvalor").text("$ 0");
                 $("#lbltotal").text("$ 0");

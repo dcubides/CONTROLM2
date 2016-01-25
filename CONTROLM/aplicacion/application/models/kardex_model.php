@@ -57,9 +57,9 @@ class Kardex_model extends CI_Model {
         (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega) as Entrega,
         (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe) as Recibe,
         concat(c.CODIGO, " ", c.DESCRIPCION) as Elemento,
-        m.tipo as "Tipo Movimiento", if(m.tipo="Salida", m.requisicion, "") as Requisicion, if(m.tipo="Entrada", dm.ticket, "") as Ticket,
+        m.tipo as Tipo_Movimiento, if(m.tipo="Salida", m.requisicion, "") as Requisicion, if(m.tipo="Entrada", dm.ticket, "") as Ticket,
         if(m.tipo="Salida", dm.cantidad, "") as Entregado, if(m.tipo="Entrada", dm.cantidad, "") as Legalizado, dm.pendiente,
-        format(dm.VALOR, 0) as "Valor Unitario", format((dm.pendiente * dm.VALOR), 0) as "Total" 
+        format(dm.VALOR, 0) as Valor_Unitario, format((dm.pendiente * dm.VALOR), 0) as "Total" 
         from controlm.movimientos m
         inner join nesitelco.DIRECTORIO d
         on m.quien_recibe=d.CEDULA
@@ -77,19 +77,34 @@ class Kardex_model extends CI_Model {
         $query = $this->db->query('select id as label FROM controlm.movimientos where id like "%'.$filtro.'%"  order by id desc');
         return $query->result();
     }
+    
+    public function tipo($filtro){
+        $query = $this->db->query('select distinct tipo as label FROM controlm.movimientos where tipo like "%'.$filtro.'%"  order by tipo desc');
+        return $query->result();
+    }
 
     public function obtenerticket($filtro){
-        $query = $this->db->query('select ticket as label FROM controlm.detalle_movimiento where id like "%'.$filtro.'%"  order by id desc');
+        $query = $this->db->query('select distinct ticket as label FROM controlm.detalle_movimiento where ticket like "%'.$filtro.'%"  order by ticket desc');
+        return $query->result();
+    }
+    
+    public function obtenerrequisicion($filtro){
+        $query = $this->db->query('select distinct requisicion as label FROM controlm.movimientos where requisicion like "%'.$filtro.'%"  order by requisicion desc');
         return $query->result();
     }
 
      public function obtenerElementos($filtro){
-        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, UNIDAD, replace(format(VALOR, 0), ",", ".") as VALOR FROM nesitelco.CATALOGO_BODEGA where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" order by id desc');
+        $query = $this->db->query('select distinct concat(CODIGO, " ", DESCRIPCION) as label
+        FROM nesitelco.CATALOGO_BODEGA
+        inner join controlm.detalle_movimiento
+        on detalle_movimiento.id_elemento=CATALOGO_BODEGA.id
+        where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%"
+        order by concat(CODIGO, " ", DESCRIPCION) desc');
         return $query->result();
     }
 
     public function obtenerFecha($filtro){
-        $query = $this->db->query('select fecha_movimiento as label FROM controlm.movimientos where id like "%'.$filtro.'%"  order by id desc');
+        $query = $this->db->query('select distinct fecha_movimiento as label FROM controlm.movimientos where fecha_movimiento like "%'.$filtro.'%"  order by fecha_movimiento desc');
         return $query->result();
     }
 }

@@ -88,7 +88,7 @@ if($this->session->userdata('conectado') == true){ ?>
       </thead>
       <tbody>
         <tr>
-          <td colspan="6"><center>No ha seleccionado busqueda</center></td>
+          <td colspan="13"><center>No ha seleccionado busqueda</center></td>
         </tr>
       </tbody>
     </table>
