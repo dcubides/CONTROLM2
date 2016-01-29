@@ -102,7 +102,10 @@ class Reporte_salidas extends CI_Controller{
             $carrito_salida=$_SESSION['CarritoSalida'.$carritoSalida->IdSession];
             
             if(isset($carritoSalida->Codigo)){
-                $tipod = $carritoSalida->tipod;
+                $tipod = $carritoSalida->Tipod;
+                $factura = $carritoSalida->Factura;
+                $requisicion = $carritoSalida->Requisicion;
+
 
                 $txtCodigo = $carritoSalida->Codigo;
                 $elemento = $carritoSalida->Elemento;

@@ -99,13 +99,13 @@ if($this->session->userdata('conectado') == true){ ?>
         </tbody>
         <tfoot>
           <tr>
-            <th colspan="3"></th>
+            <th colspan="6"></th>
             <th style="text-align: center;">Total Cantidades</th>
             <th colspan="2" style="text-align: center;">Total</th>
             <th></th>
           </tr>
           <tr>
-            <td colspan="3">&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
             <td style="text-align: center;"><label id="lbltcantidad"></label></td>
             <td colspan="2" style="text-align: center;"><label id="lbltotal"></label></td>
           </tr>
