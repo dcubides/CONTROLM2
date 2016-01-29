@@ -139,10 +139,18 @@ $(document).ready(function(){
     $('#btnAgregarElemento').click(function(){
         $("form#frmDetalleM").submit(function(){
             var Elemento = new Object();
+            //var factura = 0;
+          //  var requisicion = 0;
+
+           //if($('#tdFactura').css('display', 'table-cell'))
+             // factura = $('#factura').val();
+
+         // if($('#tdRequisicion').css('display', 'table-cell'))
+           //   factura = $('#requisicion').val();
             
-            Elemento.Tipod = tipod;
-            Elemento.Requisicion = $('#requisicion').val;
-            Elemento.Factura = factura;
+            Elemento.Tipod = $('#tipod').val();
+            Elemento.Requisicion = $('#requisicion').val();
+            Elemento.Factura = $('#factura').val();
 
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
