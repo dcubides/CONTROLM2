@@ -139,6 +139,7 @@ $(document).ready(function(){
     $('#btnAgregarElemento').click(function(){
         $("form#frmDetalleM").submit(function(){
             var Elemento = new Object();
+           
             
             Elemento.Tipod = $('#tipod').val();
             Elemento.Requisicion = $('#requisicion').val();
