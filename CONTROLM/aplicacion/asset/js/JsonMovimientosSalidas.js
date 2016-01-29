@@ -140,9 +140,9 @@ $(document).ready(function(){
         $("form#frmDetalleM").submit(function(){
             var Elemento = new Object();
             
-            Elemento.Tipod = $('#tipod').val;
+            Elemento.Tipod = tipod;
             Elemento.Requisicion = $('#requisicion').val;
-            Elemento.Factura = $('#factura').val;
+            Elemento.Factura = factura;
 
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
@@ -196,6 +196,9 @@ $(document).ready(function(){
 							+"<td>$ " + Operacion + "</td>"
 							+"<td><div align='center'>"
 							+'<img onclick="EliminarItem('
+                            +"'" + item.tipod + "',"
+                            +"'" + item.factura + "',"
+                            +"'" + item.requisicion + "',"
 							+"'" + item.txtCodigo + "',"
 							+"'" + item.elemento + "',"
                             +"'" + item.unidad + "',"
@@ -263,8 +266,9 @@ $(document).ready(function(){
     });
 });
 
-function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
+function EliminarItem(tipod, factura, requisicion, codigo, descripcion, unidad, cantidad, idsession, valor){
     var Elemento = new Object();
+
     Elemento.Tipod = tipod;
     Elemento.Factura = factura;
     Elemento.Requisicion = requisicion;
