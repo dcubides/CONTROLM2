@@ -45,6 +45,7 @@ if($this->session->userdata('conectado') == true){ ?>
                        </thead>
             </table>
             </form>
+            <label> <h5><li> Si el reporte NO es una devolucion a bodega, ingresar en el campo "QUIEN RECIBE" el nombre "REPORTE TICKET".</li> </h5></label>
 
                   <form name="frmDetalleM" id="frmDetalleM" class="form-horizontal" role="form" autocomplete="off">
                   <h2 class="page-header"><span class="icon-th-list"></span> Detalle movimiento</h2>
@@ -56,13 +57,14 @@ if($this->session->userdata('conectado') == true){ ?>
                      <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>
                        <tr>
-                       <th style="text-align: center;">Elemento: <input class="span2" type="text" name="elemento" id="elemento" required=""/>
-                                                      <input class="span2" type="hidden" name="codigo" id="codigo"/>
-                                                      <input class="span2" type="hidden" name="descripcion" id="descripcion"/>
+                       <th style="text-align: center;">Tipo: <select class="span3" id="tipo"><option>Legalización Bodega</option><option>Legalizacion Ticket</option></select></th>
+                       <th style="text-align: center;">Elemento: <input class="span3" type="text" name="elemento" id="elemento" required=""/>
+                                                      <input class="span3" type="hidden" name="codigo" id="codigo"/>
+                                                      <input class="span3" type="hidden" name="descripcion" id="descripcion"/>
                                                       <input type="hidden" name="idsession"  id="idsession" value="<?php echo md5(rand(1000,50000)); ?>" /></td>
-                        <th style="text-align: center;">Unidad: <input class="span2" type="text" name="unidad" id="unidad" readonly=""/></th>
-                       <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
-                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización Bodega</option><option>Compra Sitio</option></select></th>
+                        <th style="text-align: center;">Unidad: <input class="span3" type="text" name="unidad" id="unidad" readonly=""/></th>
+                       <th style="text-align: center;">Cantidad Legalizada: <input class="span3" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
+                       
                        <th id="tdOculto"><td></td></th>
                        </tr><br />
                        <tr>
