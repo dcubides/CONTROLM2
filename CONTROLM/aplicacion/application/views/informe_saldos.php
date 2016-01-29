@@ -6,11 +6,11 @@ if($this->session->userdata('conectado') == true){ ?>
 <script src="<?php echo base_url()?>asset/js/JsonSaldos.js"></script>
 
 <div class"cintainer">
-  <h1 class="page-header"><span class="icon-play-circle"></span> Informe Saldos</h1>
+  <h2 class="page-header"><span class="icon-list-alt"></span> Informe saldos.</h2>
   
   <div class="widget-content">
     <form name="formulario" id="formulario" class="form-horizontal" role="form">
-      <h2><span class="icon-upload"></span> Saldos</h2>
+      <h2><span class="icon-barcode"></span> Saldos.</h2>
       
       <hr/><br/>
       <table class="table table-striped table-bordered" border=0 width="100%">

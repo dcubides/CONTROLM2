@@ -36,13 +36,7 @@ if($this->session->userdata('conectado') == true){ ?>
                     class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span> </a><a class="brand" href="index.html">Administrador de Aplicaciones Nesitelco S.A. </a>
       <div class="nav-collapse">
         <ul class="nav pull-right">
-          <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                            class="icon-cog"></i> Account <b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="javascript:;">Settings</a></li>
-              <li><a href="javascript:;">Help</a></li>
-            </ul>
-          </li>
+          
           <?php
       $emailUser = $this->session->userdata('email');
       $nombreUser = $this->session->userdata('usuario');
@@ -52,7 +46,7 @@ if($this->session->userdata('conectado') == true){ ?>
                             class="icon-user"></i> <?php echo $nombreUser; ?> <b class="caret"></b></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo base_url();?>index.php/home/salir">Salir</a></li>
-              <li><a href="javascript:;">perfil</a></li>
+              
               
             </ul>
           </li>
@@ -70,10 +64,10 @@ if($this->session->userdata('conectado') == true){ ?>
   <div class="subnavbar-inner">
     <div class="container">
       <ul class="mainnav">
-        <li class="active"><a href="<?php echo site_url('reporte_salidas')?>"><i class="icon-dashboard"></i><span>Reporte de Salida </span> </a> </li>
-         <li class="active"><a href="<?php echo site_url('reporte_entradas')?>"><i class="icon-dashboard"></i><span>Reportes de Devoluciones</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('reportes_movimientos')?>'><i class="icon-list-alt"></i><span>Informes Movimientos</span> </a> </li>
-        <li class="active"><a href='<?php echo site_url('reporte_saldos')?>'><i class="icon-facetime-video"></i><span>Informes de Saldos</span> </a></li>
+        <li class="active"><a href="<?php echo site_url('reporte_salidas')?>"><i class="icon-dashboard"></i><span>Reporte de salidas </span> </a> </li>
+         <li class="active"><a href="<?php echo site_url('reporte_entradas')?>"><i class="icon-dashboard"></i><span>Legalización de materiales</span> </a> </li>
+        <li class="active"><a href='<?php echo site_url('reportes_movimientos')?>'><i class="icon-list-alt"></i><span>Informes movimientos</span> </a> </li>
+        <li class="active"><a href='<?php echo site_url('reporte_saldos')?>'><i class="icon-facetime-video"></i><span>Informes de saldos</span> </a></li>
         <li class="active"><a href="<?php echo base_url();?>index.php/home/salir"><i class="icon-bar-chart"></i><span>Salir</span> </a> </li>
        
        

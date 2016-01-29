@@ -14,9 +14,10 @@ class Entradas_model extends CI_Model {
     
 	public function buscartecnico($filtro){
 	   //armamos la consulta
-       $query = $this->db->query('SELECT distinct CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.DIRECTORIO 
+       $query = $this->db->query('SELECT distinct CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label
+       FROM nesitelco.DIRECTORIO 
        inner join controlm.movimientos
-       on directorio.cedula=movimientos.quien_recibe
+       on DIRECTORIO.cedula=movimientos.quien_recibe
        inner join controlm.detalle_movimiento
        on movimientos.id=detalle_movimiento.id_movimiento
        where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%"
@@ -29,7 +30,7 @@ class Entradas_model extends CI_Model {
     
     public function buscartickets($filtro){
         //armamos la consulta
-        $query = $this->db->query('SELECT id as label FROM nesitelco.ticket WHERE ESTADO="ABIERTO" AND id like "%'.$filtro.'%"');
+        $query = $this->db->query('SELECT id as label FROM nesitelco.TICKET WHERE ESTADO="ABIERTO" AND id like "%'.$filtro.'%"');
         return $query->result();
     }
     
@@ -55,7 +56,9 @@ class Entradas_model extends CI_Model {
         inner join controlm.movimientos
         on movimientos.id=detalle_movimiento.id_movimiento
         where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" and
-        movimientos.quien_recibe="'.$tecnico.'" order by CATALOGO_BODEGA.id desc');
+        movimientos.quien_recibe="'.$tecnico.'"
+        group by CATALOGO_BODEGA.CODIGO
+        order by CATALOGO_BODEGA.id desc');
         return $query->result();
     }
     
@@ -76,16 +79,27 @@ class Entradas_model extends CI_Model {
      	return $ids;
     }
     
-    public function obtenerDetalleSalida($tecnico, $idElemento){
+    public function obtenerDetalleSalida($tecnico, $idElemento, $tipo){
         //armamos la consulta
-        $query = $this->db->query('select detalle_movimiento.id, pendiente
-        from controlm.detalle_movimiento
-        inner join movimientos
-        on detalle_movimiento.id_movimiento=movimientos.id
-        where pendiente>0
-        and id_elemento="'.$idElemento.'"
-        and movimientos.quien_recibe="'.$tecnico.'"
-        order by id asc');
+        if($tipo=="Legalización Bodega"){
+            $query = $this->db->query('select detalle_movimiento.id, pendiente
+            from controlm.detalle_movimiento
+            inner join movimientos
+            on detalle_movimiento.id_movimiento=movimientos.id
+            where pendiente>0
+            and id_elemento="'.$idElemento.'"
+            and movimientos.quien_recibe="'.$tecnico.'"
+            order by id asc');
+        }else{
+            $query = $this->db->query('select detalle_movimiento.id, pendiente
+            from controlm.detalle_movimiento
+            inner join movimientos
+            on detalle_movimiento.id_movimiento=movimientos.id
+            where pendiente>=0
+            and id_elemento="'.$idElemento.'"
+            and movimientos.quien_recibe="'.$tecnico.'"
+            order by id asc limit 1');
+        }
         
         return $query->result_array();
     }

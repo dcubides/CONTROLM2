@@ -10,10 +10,10 @@ if($this->session->userdata('conectado') == true){ ?>
 
   <div class"cintainer">
 <div id="mensaje"></div> 
-<h1 class="page-header"><span class="icon-play-circle"></span> Nuevo Movimiento</h1>
+<h2 class="page-header"><span class="icon-play-circle"></span> Nuevo movimiento.</h2>
   <div class="widget-content">
     <form name="formulario" id="formulario" class="form-horizontal" role="form">
-      <h2><span class="icon-upload"></span> Nueva Entrada</h2>
+      <h2><span class="icon-download"></span> Nueva entrada.</h2>
       <hr/><br/>
       <table class="table table-striped table-bordered" border=0 width="100%">
         <tr>
@@ -22,7 +22,7 @@ if($this->session->userdata('conectado') == true){ ?>
               <tr>
                 <td>&nbsp;&nbsp;&nbsp;&nbsp;Entrada:&nbsp;&nbsp;&nbsp;</td>
                 <td>
-                  <input type="text" name="idEntradas" id="idEntradas" class="span2" />
+                  <input type="text" name="idEntradas" id="idEntradas" class="span2" disabled/>
                 </td>
               </tr>
             </table>
@@ -36,8 +36,8 @@ if($this->session->userdata('conectado') == true){ ?>
           <table id="carritoSalidas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>
                        <tr>
-                       <th style="text-align: center;">Técnico: <input class="span2" type="text" name="quien_entrega" id="quien_entrega"/><th>
-                        <th style="text-align: center;">Recibe: <input class="span2" type="text" name="quien_recibe" id="quien_recibe"/><th>
+                       <th style="text-align: center;">Técnico entrega: <input class="span2" type="text" name="quien_entrega" id="quien_entrega"/><th>
+                        <th style="text-align: center;">Quien recibe: <input class="span2" type="text" name="quien_recibe" id="quien_recibe"/><th>
 
                        <th style="text-align: center;"><center><button type="submit" class="btn btn-primary" id="salvar-entrada"><span class="icon-save"></span> Guardar Entrada</button></center></th>
 
@@ -47,7 +47,7 @@ if($this->session->userdata('conectado') == true){ ?>
             </form>
 
                   <form name="frmDetalleM" id="frmDetalleM" class="form-horizontal" role="form" autocomplete="off">
-                  <h2 class="page-header"><span class="icon-th-list"></span> Detalle Movimiento</h2>
+                  <h2 class="page-header"><span class="icon-th-list"></span> Detalle movimiento</h2>
 
 
                       <br>
@@ -62,12 +62,14 @@ if($this->session->userdata('conectado') == true){ ?>
                                                       <input type="hidden" name="idsession"  id="idsession" value="<?php echo md5(rand(1000,50000)); ?>" /></td>
                         <th style="text-align: center;">Unidad: <input class="span2" type="text" name="unidad" id="unidad" readonly=""/></th>
                        <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
-                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización</option><option>Compra</option></select></th>
-                       </tr><br>
+                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización Bodega</option><option>Compra Sitio</option></select></th>
+                       <th id="tdOculto"><td></td></th>
+                       </tr><br />
                        <tr>
                        <th style="text-align: center;">Cantidad Asignada: <input class="span2" type="text" name="cantidad_asignada" id="cantidad_asignada" readonly=""/></th>
-                       <th style="text-align: center;">Valor: <input class="span2" type="text" name="valor" id="valor" required=""/></th>
+                       <th style="text-align: center;">Valor uni.: <input class="span2" type="text" name="valor" id="valor" required=""/></th>
                        <th style="text-align: center;">Ticket: <input class="span2" type="text" name="ticket" id="ticket" required=""/></th>
+                       <th id="tdFactura" style="text-align: center;">Factura: <input class="span2" type="text" name="factura" id="factura" required=""/></th>
                        <th style="text-align: center;"><center><input type="submit" class="btn btn-primary" name="btnAgregarElemento" id="btnAgregarElemento" value="Agregar Elemento" /></center></th>
                        </tr>
                        </thead>
@@ -80,23 +82,23 @@ if($this->session->userdata('conectado') == true){ ?>
 
                       <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                         <thead>
-                        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">TICKET</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">ASIGNADO</th><th style="text-align: center;">LEGALIZADO</th><th style="text-align: center;">PENDIENTE</th><th style="text-align: center;">TIPO</th><th style="text-align: center;">VALOR</th><th style="text-align: center;">TOTAL</th><th></th></tr></thead>
+                        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">TICKET</th><th style="text-align: center;">FACTURA</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">ASIGNADO</th><th style="text-align: center;">LEGALIZADO</th><th style="text-align: center;">PENDIENTE</th><th style="text-align: center;">TIPO</th><th style="text-align: center;">VALOR</th><th style="text-align: center;">TOTAL</th><th></th></tr></thead>
                         <tbody>
                       <tr>
-                      <td colspan=11><center>No Hay Productos Agregados</center></td>
+                      <td colspan=12><center>No hay productos agregados</center></td>
                       </tr>
         
                       </tbody>
                        <tfoot>
           <tr>
-            <th colspan="5"></th>
+            <th colspan="6"></th>
             <th style="text-align: center;">Total Cantidad Legalizado</th>
             <th colspan="2"></th>
             <th colspan="2" style="text-align: center;">Total</th>
             <th></th>
           </tr>
           <tr>
-            <td colspan="5">&nbsp;</td>
+            <td colspan="6">&nbsp;</td>
             <td style="text-align: center;"><label id="lbltcantidad"></label></td>
             <td colspan="2"></td>
             <td colspan="2" style="text-align: center;"><label id="lbltotal"></label></td>

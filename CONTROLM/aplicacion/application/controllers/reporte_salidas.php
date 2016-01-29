@@ -82,7 +82,7 @@ class Reporte_salidas extends CI_Controller{
                          "quien_entrega"      => $entrega,
                          "quien_recibe"       => $recibe,
                          "estado"             => $Salida->estado,
-                         "requisicion"        => $Salida->requisicion,
+                        // "requisicion"        => $Salida->requisicion,
                          "usuario"            => $this->session->userdata('idusuario')
         );
         
@@ -102,6 +102,8 @@ class Reporte_salidas extends CI_Controller{
             $carrito_salida=$_SESSION['CarritoSalida'.$carritoSalida->IdSession];
             
             if(isset($carritoSalida->Codigo)){
+                $tipod = $carritoSalida->tipod;
+
                 $txtCodigo = $carritoSalida->Codigo;
                 $elemento = $carritoSalida->Elemento;
                 $unidad  = $carritoSalida->Unidad;
@@ -117,19 +119,20 @@ class Reporte_salidas extends CI_Controller{
                 
                 if($donde != -1){
                     $cuanto=$carrito_salida[$donde]['cantidad'] + $cantidad;
-                    $carrito_salida[$donde]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cuanto,"valor"=>$Costo);
+                    $carrito_salida[$donde]=array("tipod"=>$tipod,"txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cuanto,"valor"=>$Costo);
                 }else{
-                    $carrito_salida[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+                    $carrito_salida[]=array("tipod"=>$tipod,"txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
                 }
             }
         }else{
+            $tipod = $carritoSalida->tipod;
             $txtCodigo = $carritoSalida->Codigo;
             $elemento = $carritoSalida->Elemento;
             $unidad  = $carritoSalida->Unidad;
             $cantidad = $carritoSalida->Cantidad;
             $Costo     = $carritoSalida->Valor;
             
-            $carrito_salida[]=array("txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
+            $carrito_salida[]=array("tipod"=>$tipod,"txtCodigo"=>$txtCodigo,"elemento"=>$elemento,"unidad"=>$unidad,"cantidad"=>$cantidad,"valor"=>$Costo);
         }
         
         $_SESSION['CarritoSalida'.$carritoSalida->IdSession]=$carrito_salida;
@@ -153,10 +156,12 @@ class Reporte_salidas extends CI_Controller{
                 
                 $arrayDetalle = array(
                          "id_movimiento"  => $Salida->id,
+
                          "id_elemento"    => $elemento, 
                          "cantidad"       => $value['cantidad'],
                          "pendiente"      => $value['cantidad'],
                          "tipo"           => $tipo,
+                         "tipod"         => $tipod, 
                          "estado"         => $estado,
                          "ticket"         => 0,
                          "catalogo"       => "Bodega",

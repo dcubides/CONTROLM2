@@ -126,18 +126,28 @@ class Reportes_movimientos extends CI_Controller{
         }
         if(!empty($nombre)){
             if(trim($filtro)!=""){
-                if(trim($tipo)=="" || strtolower(trim($tipo)=="salida")){
+                if(trim($tipo)==""){
+                    $salidas = ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
+                    $entradas = ' or (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
+                    
+                    $filtro = $filtro.$salidas.$entradas;
+                }
+                if(strtolower(trim($tipo))=="salida"){
                     $filtro .= ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
                 }
-                if(strtolower(trim($tipo)=="entrada")){
+                if(strtolower(trim($tipo))=="entrada"){
                     $filtro .= ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
                 }
             }
             else{
-              if(trim($tipo)=="" || strtolower(trim($tipo)=="salida")){
+              if(trim($tipo)==""){
+                $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"
+                or (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
+              }
+              if(strtolower(trim($tipo))=="salida"){
                 $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
               }
-              if(strtolower(trim($tipo)=="entrada")){
+              if(strtolower(trim($tipo))=="entrada"){
                 $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
               }
             }
@@ -194,18 +204,28 @@ class Reportes_movimientos extends CI_Controller{
         }
         if(!empty($nombre)){
             if(trim($filtro)!=""){
-                if(trim($tipo)=="" || strtolower(trim($tipo)=="salida")){
+                if(trim($tipo)==""){
+                    $salidas = ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
+                    $entradas = ' or (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
+                    
+                    $filtro = $filtro.$salidas.$entradas;
+                }
+                if(strtolower(trim($tipo))=="salida"){
                     $filtro .= ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
                 }
-                if(strtolower(trim($tipo)=="entrada")){
+                if(strtolower(trim($tipo))=="entrada"){
                     $filtro .= ' and (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
                 }
             }
             else{
-              if(trim($tipo)=="" || strtolower(trim($tipo)=="salida")){
+              if(trim($tipo)==""){
+                $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"
+                or (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
+              }
+              if(strtolower(trim($tipo))=="salida"){
                 $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_recibe)="'.$nombre.'"';
               }
-              if(strtolower(trim($tipo)=="entrada")){
+              if(strtolower(trim($tipo))=="entrada"){
                 $filtro = ' where (select concat(d.NOMBRE, " ", d.APELLIDOS) FROM nesitelco.DIRECTORIO d where CEDULA=m.quien_entrega)="'.$nombre.'"';
               }
             }
@@ -222,22 +242,24 @@ class Reportes_movimientos extends CI_Controller{
         $this->excel->getActiveSheet()->setCellValue('D4', 'RECIBE');
         $this->excel->getActiveSheet()->setCellValue('E4', 'ELEMENTO');
         $this->excel->getActiveSheet()->setCellValue('F4', 'TIPO MOVIMIENTO');
-        $this->excel->getActiveSheet()->setCellValue('G4', 'REQUISICION');
-        $this->excel->getActiveSheet()->setCellValue('H4', 'TICKET');
-        $this->excel->getActiveSheet()->setCellValue('I4', 'ENTREGADO');
-        $this->excel->getActiveSheet()->setCellValue('J4', 'LEGALIZADO');
-        $this->excel->getActiveSheet()->setCellValue('K4', 'PENDIENTE');
-        $this->excel->getActiveSheet()->setCellValue('L4', 'VALOR UNITARIO');
-        $this->excel->getActiveSheet()->setCellValue('M4', 'TOTAL');
+        $this->excel->getActiveSheet()->setCellValue('G4', 'TIPO');
+        $this->excel->getActiveSheet()->setCellValue('H4', 'REQUISICION');
+        $this->excel->getActiveSheet()->setCellValue('I4', 'TICKET');
+        $this->excel->getActiveSheet()->setCellValue('J4', 'FACTURA');
+        $this->excel->getActiveSheet()->setCellValue('K4', 'ENTREGADO');
+        $this->excel->getActiveSheet()->setCellValue('L4', 'LEGALIZADO');
+        $this->excel->getActiveSheet()->setCellValue('M4', 'PENDIENTE');
+        $this->excel->getActiveSheet()->setCellValue('N4', 'VALOR UNITARIO');
+        $this->excel->getActiveSheet()->setCellValue('O4', 'TOTAL');
         //merge cell A1 until C1
-        $this->excel->getActiveSheet()->mergeCells('A1:M1');
+        $this->excel->getActiveSheet()->mergeCells('A1:O1');
         //set aligment to center for that merged cell (A1 to C1)
         $this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         //make the font become bold
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
         $this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(16);
         $this->excel->getActiveSheet()->getStyle('A1')->getFill()->getStartColor()->setARGB('#333');
-        for($col = ord('A'); $col <= ord('M'); $col++){
+        for($col = ord('A'); $col <= ord('N'); $col++){
             //set column dimension
             $this->excel->getActiveSheet()->getColumnDimension(chr($col))->setAutoSize(true);
             //change the font size
@@ -269,6 +291,8 @@ class Reportes_movimientos extends CI_Controller{
         $this->excel->getActiveSheet()->getStyle('K4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->getStyle('L4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->getStyle('M4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $this->excel->getActiveSheet()->getStyle('N4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $this->excel->getActiveSheet()->getStyle('O4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         
         $filename='Reporte Movimientos.xls'; //save our workbook as this file name
         header('Content-Type: application/vnd.ms-excel'); //mime type

@@ -18,7 +18,7 @@ $(function(){
         select: function(event, ui){
             $('#codigo').val(ui.item.CODIGO);
             $('#descripcion').val(ui.item.DESCRIPCION);
-            if($('#tipo').val()=="Legalización")
+            if($('#tipo').val()=="Legalización Bodega")
               $('#cantidad_asignada').val(ui.item.cantidad);
             $('#unidad').val(ui.item.UNIDAD);
             $('#valor').val(ui.item.VALOR);
@@ -31,6 +31,10 @@ $(function(){
 });
 
 $(document).ready(function(){
+    $('#tdFactura').css('display', 'none');
+    $('#tdOculto').css('display', 'none');
+    $('#factura').prop('required', false);
+    
     soloNumero('#cantidad_legalizada');
     soloNumero('#valor');
     limpiarCero('#valor');
@@ -40,10 +44,16 @@ $(document).ready(function(){
     
     //----------------------------------------------------------------//
     $('#tipo').change(function(){
-        if($('#tipo').val()!="Legalización"){
+        if($('#tipo').val()!="Legalización Bodega"){
             $('#cantidad_asignada').val(0);
+            $('#tdFactura').css('display', 'table-cell');
+            $('#tdOculto').css('display', 'table-cell');
+            $('#factura').prop('required', true);
         }else{
             $('#cantidad_asignada').val(cantidadAsignada);
+            $('#tdFactura').css('display', 'none');
+            $('#tdOculto').css('display', 'none');
+            $('#factura').prop('required', false);
             var legalizado = $('#cantidad_legalizada').val().replace(',', '.') + key;
             
             if(legalizado>cantidadAsignada){
@@ -130,10 +140,14 @@ $(document).ready(function(){
     $('#btnAgregarElemento').click(function(){
         $("form#frmDetalleM").submit(function(){
             var Elemento = new Object();
+            var factura = 0;
+            if($('#tdOculto').css('display', 'table-cell'))
+              factura = $('#factura').val();
             
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
             Elemento.Ticket = $('#ticket').val();
+            Elemento.Factura = factura;
             Elemento.Unidad = $('#unidad').val();
             Elemento.Asignado = $('#cantidad_asignada').val();
             Elemento.Legalizado = $('#cantidad_legalizada').val();
@@ -179,6 +193,7 @@ $(document).ready(function(){
                             +"<td>" + item.txtCodigo + "</td>"
                             +"<td>" + item.elemento + "</td>"
                             +"<td>" + item.ticket + "</td>"
+                            +"<td>" + item.factura + "</td>"
                             +"<td>" + item.unidad + "</td>"
                             +"<td>" + item.asignado + "</td>"
                             +"<td>" + item.legalizado + "</td>"
@@ -191,6 +206,7 @@ $(document).ready(function(){
                             +"'" + item.txtCodigo + "',"
                             +"'" + item.elemento + "',"
                             +"'" + item.ticket + "',"
+                            +"'" + item.factura + "',"
                             +"'" + item.unidad + "',"
                             +"'" + item.asignado + "',"
                             +"'-1',"
@@ -261,12 +277,14 @@ $(document).ready(function(){
     });
 });
 
-function EliminarItem(codigo, descripcion, ticket, unidad, asignado, legalizado, pendiete, tipo, idsession, valor){
+function EliminarItem(codigo, descripcion, ticket, factura, unidad, asignado, legalizado, pendiete, tipo, idsession, valor){
     var Elemento = new Object();
+    var factura = 0;
     
     Elemento.Codigo = codigo;
     Elemento.Elemento = descripcion;
     Elemento.Ticket = ticket;
+    Elemento.Factura = factura;
     Elemento.Unidad = unidad;
     Elemento.Asignado = asignado;
     Elemento.Legalizado = legalizado;
@@ -312,6 +330,7 @@ function EliminarItem(codigo, descripcion, ticket, unidad, asignado, legalizado,
                             +"<td>" + item.txtCodigo + "</td>"
                             +"<td>" + item.elemento + "</td>"
                             +"<td>" + item.ticket + "</td>"
+                            +"<td>" + item.factura + "</td>"
                             +"<td>" + item.unidad + "</td>"
                             +"<td>" + item.asignado + "</td>"
                             +"<td>" + item.legalizado + "</td>"
@@ -324,6 +343,7 @@ function EliminarItem(codigo, descripcion, ticket, unidad, asignado, legalizado,
                             +"'" + item.txtCodigo + "',"
                             +"'" + item.elemento + "',"
                             +"'" + item.ticket + "',"
+                            +"'" + item.factura + "',"
                             +"'" + item.unidad + "',"
                             +"'" + item.asignado + "',"
                             +"'-1',"
@@ -361,10 +381,15 @@ function LimpiarTexto(){
     $('#elemento').val("");
     $('#unidad').val("");
     $('#cantidad_legalizada').val("");
-    $('#tipo').val("Legalización");
+    $('#tipo').val("Legalización Bodega");
     $('#cantidad_asignada').val(0);
-    $('#valor').val(0);
-    $('#ticket').val(0);
+    $('#valor').val('');
+    $('#ticket').val('');
+    $('#factura').val('');
+    
+    $('#tdFactura').css('display', 'none');
+    $('#tdOculto').css('display', 'none');
+    $('#factura').prop('required', false);
     
     $("#elemento").focus();
 }

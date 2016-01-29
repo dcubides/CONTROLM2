@@ -6,11 +6,11 @@ if($this->session->userdata('conectado') == true){ ?>
 <script src="<?php echo base_url()?>asset/js/JsonMovimientos.js"></script>
 
 <div class"cintainer">
-  <h1 class="page-header"><span class="icon-play-circle"></span> Informe Movimientos</h1>
+  <h2 class="page-header"><span class=" icon-list-alt"></span> Informe movimientos.</h2>
   
   <div class="widget-content">
     <form name="formulario" id="formulario" class="form-horizontal" role="form">
-      <h2><span class="icon-upload"></span> Movimientos</h2>
+      <h2><span class="icon-move"></span> Movimientos.</h2>
       
       <hr/><br/>
       <table class="table table-striped table-bordered" border=0 width="100%">
@@ -74,8 +74,10 @@ if($this->session->userdata('conectado') == true){ ?>
         <th style="text-align: center;">RECIBE</th>
         <th style="text-align: center;">ELEMENTO</th>
         <th style="text-align: center;">TIPO MOVIMIENTO</th>
+        <th style="text-align: center;">TIPO</th>
         <th style="text-align: center;">REQUISICIÓN</th>
         <th style="text-align: center;">TICKET</th>
+        <th style="text-align: center;">FACTURA</th>
         <th style="text-align: center;">ENTREGADO</th>
         <th style="text-align: center;">LEGALIZADO</th>
         <th style="text-align: center;">PENDIENTE</th>
@@ -88,7 +90,7 @@ if($this->session->userdata('conectado') == true){ ?>
       </thead>
       <tbody>
         <tr>
-          <td colspan="13"><center>No ha seleccionado busqueda</center></td>
+          <td colspan="15"><center>No ha seleccionado busqueda</center></td>
         </tr>
       </tbody>
     </table>

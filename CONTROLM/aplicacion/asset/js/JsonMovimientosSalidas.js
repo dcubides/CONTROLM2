@@ -1,9 +1,13 @@
 var currentLocation = window.location;
 
+
+
 $(function(){
+
     $('#quien_recive').autocomplete({
         source: currentLocation + "/ListarTecnicos"
     });
+
     $('#quien_entrega').autocomplete({
         source: currentLocation + "/EncargadoBodega"
     });
@@ -25,14 +29,44 @@ $(function(){
 });
 
 $(document).ready(function(){
+    $('#tdFactura').css('display', 'none');
+    $('#tdRequisicion').css('display', 'none');
+    $('#tdOculto').css('display', 'none');
+    $('#factura').prop('required', false);
+    $('#requisicion').prop('required', false);
+
+    
+    
     soloNumero('#requisicion');
     soloNumero('#cantidad');
     soloNumero('#valor');
     limpiarCero('#valor');
     llenarCero('#valor');
     formatoNumero('valor');
-    
-    $('#').keyup(function(){
+
+    //----------------------------------------------------------------//
+    $('#tipod').change(function(){
+        if($('#tipod').val()!="Salida Bodega"){
+            //$('#cantidad_asignada').val(0);
+            $('#tdFactura').css('display', 'table-cell');
+            $('#tdOculto').css('display', 'table-cell');
+            $('#factura').prop('required', true);
+            $('#tdRequisicion').css('display', 'none');
+            $('#requisicion').prop('required', false);
+        }else{
+           // $('#cantidad_asignada').val(cantidadAsignada);
+           $('#tdFactura').css('display', 'none');
+            $('#factura').prop('required', false);
+            $('#tdRequisicion').css('display', 'table-cell');
+            $('#tdOculto').css('display', 'table-cell');
+            $('#requisicion').prop('required', true);
+            
+           
+        }
+    });
+
+
+  $('#').keyup(function(){
         var input = document.getElementById('requisicion');
         var num = input.value.replace(/\./g,'');
         
@@ -67,7 +101,7 @@ $(document).ready(function(){
                         Salida.quien_entrega = $('#quien_entrega').val();
                         Salida.quien_recibe = $('#quien_recive').val();
                         Salida.estado = 'Pendiente';
-                        Salida.requisicion = $('#requisicion').val();
+                        //Salida.requisicion = $('#requisicion').val();
                         Salida.usuario = '';
                         
                         var DatosJson = JSON.stringify(Salida);
@@ -106,6 +140,10 @@ $(document).ready(function(){
         $("form#frmDetalleM").submit(function(){
             var Elemento = new Object();
             
+            Elemento.tipod = $('#tipod').val;
+            Elemento.requisicion = $('#requisicion').val;
+            Elemento.factura = $('#factura').val;
+
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
             Elemento.Unidad = $('#unidad').val();
@@ -147,6 +185,9 @@ $(document).ready(function(){
                         
                         var nuevaFila =
 							"<tr>"
+                            +"<td>" + item.tipod + "</td>"
+                            +"<td>" + item.factura + "</td>"
+                            +"<td>" + item.requisicion + "</td>"
 							+"<td>" + item.txtCodigo + "</td>"
 							+"<td>" + item.elemento + "</td>"
 							+"<td>" + item.unidad + "</td>"
@@ -224,7 +265,10 @@ $(document).ready(function(){
 
 function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
     var Elemento = new Object();
-    
+    Elemento.tipod = tipod;
+    Elemento.factura = factura;
+    Elemento.requisicion = requisicion;
+
     Elemento.Codigo = codigo;
     Elemento.Elemento = descripcion;
     Elemento.Unidad = unidad;
@@ -270,6 +314,9 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
                         
                 var nuevaFila =
 							"<tr>"
+                            +"<td>"+item.tipod+"</td>"
+                            +"<td>"+ item.factura +"</td>"
+                            +"<td>"+ item.requisicion +"</td>"
 							+"<td>"+item.txtCodigo+"</td>"
 							+"<td>"+item.elemento+"</td>"
 							+"<td>"+item.unidad+"</td>"
@@ -310,6 +357,9 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
    );    
 }
 function LimpiarTexto(){
+    $('#tipod').val("");
+    $('#factura').val("");
+    $('#requisicion').val("");
     $('#elemento').val("");
     $('#unidad').val("");
     $('#cantidad').val("");
