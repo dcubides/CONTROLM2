@@ -25,6 +25,7 @@ $(document).ready(function(){
                 $.each(data, function(i, item) {
                     var nuevaFila =
                              "<tr>" 
+                             +"<td>" + item.TIPO + "</td>"
                              +"<td>" + item.CODIGO + "</td>"
                              +"<td>" + item.DESCRIPCION + "</td>"
                              +"<td>" + item.UNIDAD + "</td>"

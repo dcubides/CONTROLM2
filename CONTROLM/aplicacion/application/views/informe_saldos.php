@@ -35,7 +35,15 @@ if($this->session->userdata('conectado') == true){ ?>
     
     <table id="carritoInforme" class="table table-striped table-bordered" border=0 width="100%">
       <thead>
-        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">CANTIDAD</th><th style="text-align: center;">VALOR</th><th style="text-align: center;">Total</th></tr>
+        <tr>
+        <th style="text-align: center;">TIPO</th>
+        <th style="text-align: center;">CODIGO</th>
+        <th style="text-align: center;">ELEMENTO</th>
+        <th style="text-align: center;">UNIDAD</th>
+        <th style="text-align: center;">CANTIDAD</th>
+        <th style="text-align: center;">VALOR</th>
+        <th style="text-align: center;">Total</th>
+        </tr>
       </thead>
       <tbody>
         <tr>

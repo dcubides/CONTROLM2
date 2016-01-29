@@ -38,7 +38,7 @@ class Kardex_model extends CI_Model {
     }
     
     public function saldos($tecnico){
-        $query = $this->db->query('SELECT c.CODIGO, c.DESCRIPCION, c.UNIDAD, sum(dm.PENDIENTE) AS CANTIDAD, sum(dm.VALOR) as VALOR,
+        $query = $this->db->query('SELECT dm.TIPOD AS TIPO, c.CODIGO, c.DESCRIPCION, c.UNIDAD, sum(dm.PENDIENTE) AS CANTIDAD, sum(dm.VALOR) as VALOR,
         (sum(dm.PENDIENTE) * sum(dm.VALOR)) AS TOTAL
         FROM nesitelco.CATALOGO_BODEGA c
         inner join controlm.detalle_movimiento dm

@@ -42,12 +42,13 @@ class Reporte_saldos extends CI_Controller{
         $this->excel->getActiveSheet()->setTitle('Informe Saldos '.$nombre[0]);
         //set cell A1 content with some text
         $this->excel->getActiveSheet()->setCellValue('A1', 'Informe Saldos '.$_GET['nombre']);
-        $this->excel->getActiveSheet()->setCellValue('A4', 'CODIGO');
-        $this->excel->getActiveSheet()->setCellValue('B4', 'DESCRIPCION');
-        $this->excel->getActiveSheet()->setCellValue('C4', 'UNIDAD');
-        $this->excel->getActiveSheet()->setCellValue('D4', 'CANTIDAD');
-        $this->excel->getActiveSheet()->setCellValue('E4', 'VALOR');
-        $this->excel->getActiveSheet()->setCellValue('F4', 'TOTAL');
+        $this->excel->getActiveSheet()->setCellValue('A4', 'TIPO');
+        $this->excel->getActiveSheet()->setCellValue('B4', 'CODIGO');
+        $this->excel->getActiveSheet()->setCellValue('C4', 'DESCRIPCION');
+        $this->excel->getActiveSheet()->setCellValue('D4', 'UNIDAD');
+        $this->excel->getActiveSheet()->setCellValue('E4', 'CANTIDAD');
+        $this->excel->getActiveSheet()->setCellValue('F4', 'VALOR');
+        $this->excel->getActiveSheet()->setCellValue('G4', 'TOTAL');
         //merge cell A1 until C1
         $this->excel->getActiveSheet()->mergeCells('A1:F1');
         //set aligment to center for that merged cell (A1 to C1)
@@ -81,6 +82,7 @@ class Reporte_saldos extends CI_Controller{
         $this->excel->getActiveSheet()->getStyle('D4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->getStyle('E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $this->excel->getActiveSheet()->getStyle('F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $this->excel->getActiveSheet()->getStyle('G4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         
         $filename='Informe Saldos '.$nombre[0].'.xls'; //save our workbook as this file name
         header('Content-Type: application/vnd.ms-excel'); //mime type
