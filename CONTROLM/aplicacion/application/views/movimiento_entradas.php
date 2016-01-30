@@ -57,21 +57,21 @@ if($this->session->userdata('conectado') == true){ ?>
                      <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                        <thead>
                        <tr>
-                       <th style="text-align: center;">Tipo: <select class="span3" id="tipo"><option>Legalización Bodega</option><option>Legalizacion Ticket</option></select></th>
-                       <th style="text-align: center;">Elemento: <input class="span3" type="text" name="elemento" id="elemento" required=""/>
-                                                      <input class="span3" type="hidden" name="codigo" id="codigo"/>
-                                                      <input class="span3" type="hidden" name="descripcion" id="descripcion"/>
+                       <th style="text-align: center;">Tipo: <select class="span2" id="tipo"><option>Legalización Bodega</option><option>Legalización Ticket</option></select></th>
+                       <th style="text-align: center;">Elemento: <input class="span2" type="text" name="elemento" id="elemento" required=""/>
+                                                      <input class="span2" type="hidden" name="codigo" id="codigo"/>
+                                                      <input class="span2" type="hidden" name="descripcion" id="descripcion"/>
                                                       <input type="hidden" name="idsession"  id="idsession" value="<?php echo md5(rand(1000,50000)); ?>" /></td>
-                        <th style="text-align: center;">Unidad: <input class="span3" type="text" name="unidad" id="unidad" readonly=""/></th>
-                       <th style="text-align: center;">Cantidad Legalizada: <input class="span3" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
+                        <th style="text-align: center;">Unidad: <input class="span2" type="text" name="unidad" id="unidad" readonly=""/></th>
+                       <th style="text-align: center;">Cantidad Legalizada: <input class="span2" type="text" name="cantidad_legalizada" id="cantidad_legalizada" required=""/></th>
                        
                        <th id="tdOculto"><td></td></th>
                        </tr><br />
                        <tr>
                        <th style="text-align: center;">Cantidad Asignada: <input class="span2" type="text" name="cantidad_asignada" id="cantidad_asignada" readonly=""/></th>
                        <th style="text-align: center;">Valor uni.: <input class="span2" type="text" name="valor" id="valor" required=""/></th>
-                       <th style="text-align: center;">Ticket: <input class="span2" type="text" name="ticket" id="ticket" required=""/></th>
-                       <th id="tdFactura" style="text-align: center;">Factura: <input class="span2" type="text" name="factura" id="factura" required=""/></th>
+                       <th id="tdTicket" style="text-align: center;">Ticket: <input class="span2" type="text" name="ticket" id="ticket" required=""/></th>
+                       
                        <th style="text-align: center;"><center><input type="submit" class="btn btn-primary" name="btnAgregarElemento" id="btnAgregarElemento" value="Agregar Elemento" /></center></th>
                        </tr>
                        </thead>
@@ -84,7 +84,19 @@ if($this->session->userdata('conectado') == true){ ?>
 
                       <table id="carritoEntradas" class="table table-striped table-bordered" border=0 width="100%">
                         <thead>
-                        <tr><th style="text-align: center;">CODIGO</th><th style="text-align: center;">ELEMENTO</th><th style="text-align: center;">TICKET</th><th style="text-align: center;">FACTURA</th><th style="text-align: center;">UNIDAD</th><th style="text-align: center;">ASIGNADO</th><th style="text-align: center;">LEGALIZADO</th><th style="text-align: center;">PENDIENTE</th><th style="text-align: center;">TIPO</th><th style="text-align: center;">VALOR</th><th style="text-align: center;">TOTAL</th><th></th></tr></thead>
+                        <tr>
+                        <th style="text-align: center;">TIPO</th>
+                        <th style="text-align: center;">CODIGO</th>
+                        <th style="text-align: center;">ELEMENTO</th>
+                        <th style="text-align: center;">TICKET</th>
+                        <th style="text-align: center;">UNIDAD</th>
+                        <th style="text-align: center;">ASIGNADO</th>
+                        <th style="text-align: center;">LEGALIZADO</th>
+                        <th style="text-align: center;">PENDIENTE</th>
+                        <th style="text-align: center;">VALOR</th>
+                        <th style="text-align: center;">TOTAL</th>
+                        <th></th>
+                        </tr></thead>
                         <tbody>
                       <tr>
                       <td colspan=12><center>No hay productos agregados</center></td>

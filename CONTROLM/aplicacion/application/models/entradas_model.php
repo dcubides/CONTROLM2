@@ -90,8 +90,18 @@ class Entradas_model extends CI_Model {
             and id_elemento="'.$idElemento.'"
             and movimientos.quien_recibe="'.$tecnico.'"
             order by id asc');
-        }else{
-            $query = $this->db->query('select detalle_movimiento.id, pendiente
+        }else if($tipo=="Legalización Ticket"){
+           $query = $this->db->query('select detalle_movimiento.id, pendiente
+            from controlm.detalle_movimiento
+            inner join movimientos
+            on detalle_movimiento.id_movimiento=movimientos.id
+            where pendiente>0
+            and id_elemento="'.$idElemento.'"
+            and movimientos.quien_recibe="'.$tecnico.'"
+            order by id asc');
+        }else {
+
+             $query = $this->db->query('select detalle_movimiento.id, pendiente
             from controlm.detalle_movimiento
             inner join movimientos
             on detalle_movimiento.id_movimiento=movimientos.id
