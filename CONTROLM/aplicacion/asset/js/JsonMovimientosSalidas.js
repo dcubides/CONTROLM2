@@ -25,6 +25,24 @@ $(function(){
 });
 
 $(document).ready(function(){
+    soloNumero('#requisicion');
+    soloNumero('#cantidad');
+    soloNumero('#valor');
+    limpiarCero('#valor');
+    llenarCero('#valor');
+    formatoNumero('valor');
+    
+    $('#').keyup(function(){
+        var input = document.getElementById('requisicion');
+        var num = input.value.replace(/\./g,'');
+        
+        if(!isNaN(num)){
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+    });
+                
     $("#formulario").submit(function(e){
         return false;
     });
@@ -112,6 +130,7 @@ $(document).ready(function(){
                     cantsincero = parseInt(cantsincero);
                     if(cantsincero!=0){
                         tCantidad = tCantidad + cantsincero;
+                        total = total.toString().replace(/\./g,'');
                         
                         var Operacion= parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.cantidad);
                         Subtotal = parseFloat(Subtotal) + parseFloat(item.valor.replace(/\./g,''));
@@ -122,6 +141,9 @@ $(document).ready(function(){
                         
                         total = total.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
                         total = total.split('').reverse().join('').replace(/^[\.]/,'');
+                        
+                        Operacion = Operacion.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+                        Operacion = Operacion.split('').reverse().join('').replace(/^[\.]/,'');
                         
                         var nuevaFila =
 							"<tr>"
@@ -145,7 +167,6 @@ $(document).ready(function(){
 							$(nuevaFila).appendTo("#carritoSalidas tbody");
                             
                             $('#lbltcantidad').text(tCantidad);
-							$("#lbltvalor").text("$ " + Subtotal);
                             $("#lbltotal").text("$ " + total);
                     }
                     
@@ -232,6 +253,7 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
             
             if(cantsincero!=0){
                 tCantidad = tCantidad + cantsincero;
+                total = total.toString().replace(/\./g,'');
                 
                 contador   = contador + 1;
                 var Operacion = parseFloat(item.valor.replace(/\./g,'')) * parseFloat(item.cantidad);
@@ -244,6 +266,9 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
                 total = total.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
                 total = total.split('').reverse().join('').replace(/^[\.]/,'');
                 
+                Operacion = Operacion.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+                Operacion = Operacion.split('').reverse().join('').replace(/^[\.]/,'');
+                        
                 var nuevaFila =
 							"<tr>"
 							+"<td>"+item.txtCodigo+"</td>"
@@ -266,7 +291,6 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
 							$(nuevaFila).appendTo("#carritoSalidas tbody");
                             
                             $('#lbltcantidad').text(tCantidad);
-							$("#lbltvalor").text("$ " + Subtotal);
                             $("#lbltotal").text("$ " + total);
 				}
 							
@@ -279,7 +303,6 @@ function EliminarItem(codigo, descripcion, unidad, cantidad, idsession, valor){
                 +"</tr>";
                 $(nuevaFila).appendTo("#carritoSalidas tbody");
                 $('#lbltcantidad').text("0");
-                $("#lbltvalor").text("$ 0");
                 $("#lbltotal").text("$ 0");
             }
             LimpiarTexto();
@@ -294,4 +317,50 @@ function LimpiarTexto(){
     $('#valor').val("");
     
     $("#elemento").focus();
+}
+function limpiarCero(id){
+    $(id).focus(function(){
+        var valor = $(id).val().replace(/\./g, '');
+        if(valor=='')
+        valor = '0';
+        if(valor=='0')
+        $(id).val('');
+    });
+}
+function llenarCero(id){
+    $(id).focusout(function(){
+        var valor = $(id).val().replace(/\./g, '');
+        if(valor=='')
+          $(id).val('0');
+    });
+}
+function formatoNumero(id){
+    $('#' + id).keyup(function(){
+        var input = document.getElementById(id);
+        var num = input.value.replace(/\./g,'');
+        
+        if(!isNaN(num)){
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+    });
+}
+function soloNumero(id){
+    $(id).keypress(function(e){
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = ' 0123456789';
+        especiales = [9, 13];
+        
+        tecla_especial = false
+        for(var i in especiales){
+            if(key == especiales[i]){
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial)
+          return false;
+    });
 }

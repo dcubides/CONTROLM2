@@ -73,8 +73,8 @@ class Reporte_salidas extends CI_Controller{
         $Salida = json_decode($this->input->post('MiSalida'));        
         $arrayResponse = array("id"=>"0","Msg"=>"Error: Ocurrio Un Error Intente de Nuevo", "TipoMsg"=>"Error");
         
-        $entrega = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
-        $recibe = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
+        $entrega = $this->salidas_model->obternerCedulas($Salida->quien_entrega);
+        $recibe = $this->salidas_model->obternerCedulas($Salida->quien_recibe);
         
         $arraySalida = array(
                          "fecha_movimiento"   => date('Y-m-d H:i:s'),
@@ -155,7 +155,7 @@ class Reporte_salidas extends CI_Controller{
                          "id_movimiento"  => $Salida->id,
                          "id_elemento"    => $elemento, 
                          "cantidad"       => $value['cantidad'],
-                         "pendiente"      => 0,
+                         "pendiente"      => $value['cantidad'],
                          "tipo"           => $tipo,
                          "estado"         => $estado,
                          "ticket"         => 0,
@@ -178,6 +178,8 @@ class Reporte_salidas extends CI_Controller{
                 
                 $this->kardex_model->guardarKardex($arrayKardex);
             }
+            
+            $this->salidas_model->actualizarEstadoMov("Terminado", $Salida->id);
             
             $arrayResponse = array("id"=>$Salida->id,"Msg"=>"<strong>Salida: ".$Salida->id."</strong>, La salida de repuestos se realizo Correctamente", "TipoMsg"=>"Sucefull");
             echo json_encode($arrayResponse);

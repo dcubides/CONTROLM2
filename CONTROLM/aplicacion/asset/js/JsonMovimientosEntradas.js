@@ -1,38 +1,79 @@
 var currentLocation = window.location;
-
+var cantidadAsignada = 0;
 $(function(){
     $('#quien_recibe').autocomplete({
-        source: currentLocation + "/ListarTecnicos"
+        source: currentLocation + "/EncargadoBodega"
     });
     $('#quien_entrega').autocomplete({
-        source: currentLocation + "/EncargadoBodega"
+        source: currentLocation + "/ListarTecnicos"
     });
     $('#ticket').autocomplete({
         source: currentLocation + "/Tickets"
     });
-    $('#idEntradas').autocomplete({
+    /*$('#idEntradas').autocomplete({
         source: currentLocation + "/Salidas"
-    });
+    });*/
     $('#elemento').autocomplete({
         source: currentLocation + "/Elementos",
         select: function(event, ui){
             $('#codigo').val(ui.item.CODIGO);
             $('#descripcion').val(ui.item.DESCRIPCION);
+            $('#cantidad_asignada').val(ui.item.cantidad);
             $('#unidad').val(ui.item.UNIDAD);
-            $('#valor').val(ui.item.VALOR);
+            $('#valor').val(ui.item.valor);
+            cantidadAsignada = ui.item.cantidad;
         }
     });
 });
 
 $(document).ready(function(){
+    soloNumero('#cantidad_legalizada');
+    soloNumero('#valor');
+    limpiarCero('#valor');
+    llenarCero('#valor');
+    soloNumero('#ticket');
+    formatoNumero('valor');
+    
+    //----------------------------------------------------------------//
+    $('#tipo').change(function(){
+        if($('#tipo').val()!="Legalización"){
+            $('#cantidad_asignada').val(0);
+        }else{
+            $('#cantidad_asignada').val(cantidadAsignada);
+            var legalizado = $('#cantidad_legalizada').val().replace(',', '.') + key;
+            
+            if(legalizado>cantidadAsignada){
+                $('#cantidad_legalizada').val(cantidadAsignada);
+            }
+        }
+    });
+    //Evitar que legalicen mas de lo que les dieron
+    $('#cantidad_legalizada').keypress(function(e){
+        if($('#tipo').val()=="Legalización"){
+            key = String.fromCharCode(e.keyCode);
+            var legalizado = $('#cantidad_legalizada').val().replace(',', '.') + key;
+            var asignado = $('#cantidad_asignada').val();
+            
+            if(asignado=='')
+              asignado = '0';
+            
+            legalizado = parseFloat(legalizado);
+            if(asignado>=legalizado){}
+            else{
+                return false;
+            }
+        }
+    });
+    //----------------------------------------------------------------//
+    
+    
     $("#formulario").submit(function(e){
         return false;
     });
     $('#frmDetalleM').submit(function(e){
         return false;
     });
-    
-    
+        
     $('#frmDetalleM').find('input, textarea, select').attr('disabled', 'disabled');
     
     $('#salvar-entrada').click(function(){
@@ -91,7 +132,7 @@ $(document).ready(function(){
             Elemento.Codigo = $('#codigo').val();
             Elemento.Elemento = $('#descripcion').val();
             Elemento.Unidad = $('#unidad').val();
-            Elemento.Cantidad = $('#cantidad').val();
+            Elemento.Cantidad = $('#cantidad_legalizada').val();
             Elemento.Valor = $('#valor').val();
             Elemento.IdSession = $('#idsession').val();
             
@@ -101,7 +142,7 @@ $(document).ready(function(){
                 MiCarrito: DatosJson
             },
             function(data, textStatus) {
-                $("#carritoSalidas tbody").html("");
+                $("#carritoEntradas tbody").html("");
                 var idses= $('#idsession').val();
                 var Subtotal = 0;
                 var total    = 0;
@@ -142,7 +183,7 @@ $(document).ready(function(){
                             + ')"' 
                             +" src='../../img/delete.png' width='20' title='Eliminar'/></div></td>"
                             +"</tr>";
-                            $(nuevaFila).appendTo("#carritoSalidas tbody");
+                            $(nuevaFila).appendTo("#carritoEntradas tbody");
                             
                             $('#lbltcantidad').text(tCantidad);
                             $("#lbltvalor").text("$ " + Subtotal);
@@ -168,7 +209,7 @@ $(document).ready(function(){
                         var Salida = new Object();
                         
                         Salida.id = $('#idSalidas').val();
-                        Salida.estado = 'Terminada';
+                        Salida.estado = 'Pendiente';
                         Salida.IdSession = $('#idsession').val();
                         Salida.usuario = '';
                         
@@ -294,4 +335,58 @@ function LimpiarTexto(){
     $('#valor').val("");
     
     $("#elemento").focus();
+}
+function LimpiarTexto(){
+    $('#elemento').val("");
+    $('#unidad').val("");
+    $('#cantidad').val("");
+    $('#valor').val("");
+    
+    $("#elemento").focus();
+}
+function limpiarCero(id){
+    $(id).focus(function(){
+        var valor = $(id).val().replace(/\./g, '');
+        if(valor=='')
+        valor = '0';
+        if(valor=='0')
+        $(id).val('');
+    });
+}
+function llenarCero(id){
+    $(id).focusout(function(){
+        var valor = $(id).val().replace(/\./g, '');
+        if(valor=='')
+          $(id).val('0');
+    });
+}
+function formatoNumero(id){
+    $('#' + id).keyup(function(){
+        var input = document.getElementById(id);
+        var num = input.value.replace(/\./g,'');
+        
+        if(!isNaN(num)){
+            num = num.toString().split('').reverse().join('').replace(/(?=\d*\.?)(\d{3})/g,'$1.');
+            num = num.split('').reverse().join('').replace(/^[\.]/,'');
+            input.value = num;
+        }
+    });
+}
+function soloNumero(id){
+    $(id).keypress(function(e){
+        key = e.keyCode || e.which;
+        tecla = String.fromCharCode(key).toLowerCase();
+        letras = ' 0123456789';
+        especiales = [9, 13];
+        
+        tecla_especial = false
+        for(var i in especiales){
+            if(key == especiales[i]){
+                tecla_especial = true;
+                break;
+            }
+        }
+        if(letras.indexOf(tecla)==-1 && !tecla_especial)
+          return false;
+    });
 }

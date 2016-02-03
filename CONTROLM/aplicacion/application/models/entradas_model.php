@@ -14,7 +14,16 @@ class Entradas_model extends CI_Model {
     
 	public function buscartecnico($filtro){
 	   //armamos la consulta
-       $query = $this->db->query('SELECT CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.DIRECTORIO where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%" and CEDULA>0 AND ESTADO="ALTA" ORDER BY concat(NOMBRE, " ", APELLIDOS) ASC');
+       $query = $this->db->query('SELECT distinct CEDULA, concat(NOMBRE, " ", APELLIDOS) AS label FROM nesitelco.DIRECTORIO 
+       inner join controlm.movimientos
+       on directorio.cedula=movimientos.quien_recibe
+       inner join controlm.detalle_movimiento
+       on movimientos.id=detalle_movimiento.id_movimiento
+       where concat(NOMBRE, " ", APELLIDOS) like "%'.$filtro.'%"
+       and CEDULA>0
+       and DIRECTORIO.ESTADO="ALTA"
+       and detalle_movimiento.pendiente>0
+       ORDER BY concat(NOMBRE, " ", APELLIDOS) ASC');
        return $query->result();
     }
     
@@ -38,8 +47,15 @@ class Entradas_model extends CI_Model {
         return $query->result();
     }
     
-    public function obtenerElementos($filtro){
-        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, UNIDAD, replace(format(VALOR, 0), ",", ".") as VALOR FROM nesitelco.CATALOGO_BODEGA where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" order by id desc');
+    public function obtenerElementos($tecnico, $filtro){
+        $query = $this->db->query('select concat(CODIGO, " ", DESCRIPCION) as label, DESCRIPCION, CODIGO, detalle_movimiento.cantidad, UNIDAD, replace(format(detalle_movimiento.valor, 0), ",", ".") as VALOR
+        FROM nesitelco.CATALOGO_BODEGA
+        inner join controlm.detalle_movimiento
+        on detalle_movimiento.id_elemento=CATALOGO_BODEGA.id
+        inner join controlm.movimientos
+        on movimientos.id=detalle_movimiento.id_movimiento
+        where concat(CODIGO, " ", DESCRIPCION) like "%'.$filtro.'%" and
+        movimientos.quien_recibe="'.$tecnico.'" order by CATALOGO_BODEGA.id desc');
         return $query->result();
     }
     
